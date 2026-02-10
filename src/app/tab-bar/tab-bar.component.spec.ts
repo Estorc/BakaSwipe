@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TabBar } from './tab-bar';
+import { TabBarComponent } from './tab-bar.component';
 
-describe('TabBar', () => {
-  let component: TabBar;
-  let fixture: ComponentFixture<TabBar>;
+describe('TabBarComponent', () => {
+  let component: TabBarComponent;
+  let fixture: ComponentFixture<TabBarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TabBar]
+      imports: [TabBarComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TabBar);
+    fixture = TestBed.createComponent(TabBarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

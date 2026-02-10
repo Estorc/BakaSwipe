@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { AnimeCardComponent } from '../anime-card/anime-card.component';
+import { TabBarComponent } from "./tab-bar/tab-bar.component";
+
 
 
 @Component({
@@ -21,8 +23,9 @@ import { AnimeCardComponent } from '../anime-card/anime-card.component';
     FormsModule,
     NgFor,
     NgIf,
-    AnimeCardComponent
-  ],
+    AnimeCardComponent,
+    TabBarComponent
+],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
