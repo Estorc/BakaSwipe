@@ -30,7 +30,7 @@ export class AppComponent {
   animeName: string = '';
   animes: any[] = [];
 
-  constructor(private router: Router, private session: SessionService) {
+  constructor(public router: Router, private session: SessionService) {
   
   }
 
