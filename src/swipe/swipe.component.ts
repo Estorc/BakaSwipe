@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatIconModule,
     MatButtonModule
   ],
-  templateUrl: './swipe.component.html'
+  templateUrl: './swipe.component.html',
+  styleUrl: './swipe.component.scss'
 })
 export class SwipeComponent {}
