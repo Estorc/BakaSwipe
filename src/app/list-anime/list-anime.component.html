@@ -1,0 +1,23 @@
+<div class="liste-container">
+  
+  <div class="filter-chips">
+    <div class="chip" *ngFor="let cat of categories">{{ cat }}</div>
+  </div>
+
+  <hr class="separator">
+
+  <div class="filter-action">
+    <mat-icon>filter_alt</mat-icon>
+    <button class="btn-filtre">Filtre</button>
+  </div>
+
+  <div class="anime-grid">
+    <div class="anime-card" *ngFor="let anime of animes">
+      <img [src]="anime.image" [alt]="anime.title">
+      <div class="anime-overlay">
+        <span class="anime-title">{{ anime.title }}</span>
+      </div>
+    </div>
+  </div>
+
+</div>

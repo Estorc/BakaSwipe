@@ -1,5 +1,4 @@
 
-
 <div class="button-group" *ngIf="router.url !== '/swipe'">
   <input matInput placeholder="Anime Name" [(ngModel)]="animeName" />
   <button mat-raised-button (click)="onSearchAnime()" *ngIf="isConnected()">Search Anime</button>
@@ -12,5 +11,5 @@
   <p #log id="log"></p>
 </div>
 
-
 <router-outlet></router-outlet>
+
