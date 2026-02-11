@@ -1,7 +1,4 @@
-<mat-menu #appMenu="matMenu">
-  <button mat-menu-item (click)="goTo('login')"> Login  </button>
-  <button mat-menu-item (click)="goTo('swipe')"> Swipe  </button>
-</mat-menu>
+
 
 <div class="button-group" *ngIf="router.url !== '/swipe'">
   <input matInput placeholder="Anime Name" [(ngModel)]="animeName" />
@@ -15,10 +12,6 @@
   <p #log id="log"></p>
 </div>
 
-<button mat-icon-button class="menu-button"
-  [matMenuTriggerFor]="appMenu">
-  <mat-icon>menu</mat-icon>
-</button>
 
 <router-outlet></router-outlet>
 
