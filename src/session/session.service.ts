@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-const SERVER_IP = "pluscorp.fr:3000";
+const SERVER_IP = "https://bakaswipe.pluscorp.fr";
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -38,7 +38,7 @@ export class SessionService {
   async checkSession(sessionId: string | null): Promise<boolean> {
     if (!sessionId) return false;
     try {
-      const res = await fetch(`http://${SERVER_IP}/session-exists`, {
+      const res = await fetch(`${SERVER_IP}/session-exists`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId })
@@ -51,7 +51,7 @@ export class SessionService {
   }
 
   async createSession(): Promise<void> {
-    const res = await fetch(`http://${SERVER_IP}/create-session`, {
+    const res = await fetch(`${SERVER_IP}/create-session`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: "{}"
@@ -66,12 +66,12 @@ export class SessionService {
     if (!await this.checkSession(this.sessionId)) {
       await this.createSession();
     }
-    const res = await fetch(`http://${SERVER_IP}/connect`, {
+    const res = await fetch(`${SERVER_IP}/connect`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ sessionId: this.sessionId, redirect_uri: `http://${SERVER_IP}/callback` })
+      body: JSON.stringify({ sessionId: this.sessionId, redirect_uri: `${SERVER_IP}/callback` })
     })
     const reader = res?.body?.getReader();
     if (!reader) {
@@ -108,7 +108,7 @@ export class SessionService {
     const options = { q: animeName, limit: 100, nsfw : true};
 
     try {
-      const res = await fetch(`http://decimally-ungummed-benito.ngrok-free.dev/search-anime`, {
+      const res = await fetch(`${SERVER_IP}/search-anime`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId: this.sessionId, options })
