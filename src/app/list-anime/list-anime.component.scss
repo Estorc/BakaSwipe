@@ -1,0 +1,82 @@
+.liste-container {
+  padding: 10px;
+  background-color: #111111;
+  min-height: 100vh;
+}
+
+.filter-chips {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 10px 0;
+  white-space: nowrap;
+  
+  .chip {
+    background-color: #a3a3a3;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+  }
+}
+
+.separator {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 10px 0;
+}
+
+.filter-action {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+
+  mat-icon { font-size: 40px; width: 40px; height: 40px; }
+
+  .btn-filtre {
+    background-color: #b3b3b3;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    color: white;
+  }
+}
+
+
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); // 4 colonnes égales
+  gap: 8px;
+}
+
+.anime-card {
+  position: relative;
+  aspect-ratio: 2 / 3; 
+  border-radius: 4px;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .anime-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    padding: 5px;
+
+    .anime-title {
+      color: white;
+      font-size: 10px;
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
