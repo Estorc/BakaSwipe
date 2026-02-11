@@ -105,7 +105,7 @@ export class SessionService {
       return null;
     }
 
-    const options = { q: animeName, limit: 100, nsfw : true};
+    const options = { q: animeName, limit: 10, nsfw : true};
 
     try {
       const res = await fetch(`${SERVER_IP}/search-anime`, {

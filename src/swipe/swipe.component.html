@@ -1,30 +1,31 @@
-<head>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-</head>
-<body>
-    <div class="container">
-    <div class="hero">
-      <div class="title">Attack on Titan</div>
+<div class="container">
+  <div 
+    class="hero" 
+    [ngStyle]="{'transform-origin': 'bottom center', 'transform': 'translateY(' + y + 'px) rotate(' + rotation + 'deg)'}"
+    (pointerdown)="startDrag($event)"
+    (pointermove)="onDrag($event)"
+    (pointerup)="endDrag($event)"
+    (pointercancel)="endDrag($event)"
+  >
+    <div class="title">Attack on Titan</div>
 
-      <div class="meta">
-        <div class="tag">Aventure</div>
-        <div>54 épisodes</div>
-        <div class="rating">⭐ 4.8</div>
-      </div>
+    <div class="meta">
+      <div class="tag">Aventure</div>
+      <div>54 épisodes</div>
+      <div class="rating">⭐ 4.8</div>
+    </div>
 
-      <div class="desc">
-        Des humains luttent pour leur survie contre des titans mangeurs
-        d'hommes dans un monde…
-      </div>
+    <div class="desc">
+      Des humains luttent pour leur survie contre des titans mangeurs
+      d'hommes dans un monde…
+    </div>
 
-      <div class="eyes">
-        <div class="eye"></div>
-        <div class="eye"></div>
-        <div class="eye"></div>
-        <div class="eye"></div>
-      </div>
+    <div class="eyes">
+      <div class="eye"></div>
+      <div class="eye"></div>
+      <div class="eye"></div>
+      <div class="eye"></div>
     </div>
   </div>
-</body>
+  <app-tab-bar></app-tab-bar>
+</div>
