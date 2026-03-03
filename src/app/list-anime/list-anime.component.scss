@@ -10,19 +10,34 @@
   overflow-x: auto;
   padding: 10px 0;
   white-space: nowrap;
-  
+  &::-webkit-scrollbar { display: none; } // Cache la barre de scroll
+
   .chip {
-    background-color: #a3a3a3;
-    color: white;
+    cursor: pointer;
+    background-color: #222;
+    color: #888;
     padding: 8px 16px;
     border-radius: 20px;
-    font-size: 14px;
+    border: 1px solid #333;
+    transition: all 0.2s;
+    user-select: none;
+
+    &:hover { 
+      background-color: #333; 
+      color: #fff; 
+    }
+
+    &.active {
+      background-color: #fff;
+      color: #111;
+      transform: scale(1.05);
+    }
   }
 }
 
 .separator {
   border: 0;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #222;
   margin: 10px 0;
 }
 
@@ -30,53 +45,133 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  cursor: pointer;
+  padding: 8px;
+  width: fit-content;
+  margin-bottom: 10px;
 
-  mat-icon { font-size: 40px; width: 40px; height: 40px; }
+  mat-icon { color: #fff; font-size: 24px; }
 
   .btn-filtre {
-    background-color: #b3b3b3;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 8px;
+    background: #333;
     color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
   }
 }
 
-
 .anime-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); // 4 colonnes égales
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
 }
 
 .anime-card {
   position: relative;
-  aspect-ratio: 2 / 3; 
-  border-radius: 4px;
+  aspect-ratio: 2 / 3;
+  border-radius: 6px;
   overflow: hidden;
+  background-color: #222;
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  img { width: 100%; height: 100%; object-fit: cover; }
 
   .anime-overlay {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0,0,0,0.8));
-    padding: 5px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.9));
+    padding: 6px;
 
     .anime-title {
       color: white;
-      font-size: 10px;
+      font-size: 9px;
+      font-weight: bold;
       display: block;
+      white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      white-space: nowrap;
     }
+
+    .theme-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+      margin-top: 2px;
+
+      .tag {
+        font-size: 7px;
+        background: rgba(255, 255, 255, 0.15);
+        color: #ccc;
+        padding: 1px 4px;
+        border-radius: 2px;
+      }
+    }
+  }
+}
+
+.empty-msg {
+  color: #555;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.themes-bar {
+  padding-top: 0 ;
+  margin-bottom: 5px;
+
+  .chip.theme {
+    font-size: 11px;
+    padding: 5px 12px;
+    background-color: #1a1a1a;
+    border-color: #222;
+    color: #666;
+
+    &.active {
+      background-color: #ff4081;
+      color: white;
+      border-color: #ff4081;
+    }
+  }
+}
+
+.tag {
+  /* Style des petits tags sur les cartes */
+  font-size: 7px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #bbb;
+  padding: 1px 4px;
+  border-radius: 2px;
+}
+
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+  color: #666;
+  text-align: center;
+
+  mat-icon {
+    font-size: 60px;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  p {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #888;
+  }
+
+  span {
+    font-size: 14px;
+    margin-top: 5px;
   }
 }
