@@ -13,47 +13,48 @@ import { TabBarComponent } from '../tab-bar/tab-bar.component';
 })
 export class ListAnimeComponent {
   animes = [
-    { title: 'Tokyo Ghoul', image: 'assets/img/anime1.jpg', status: 'Vue', themes: ['Action', 'Drame'] },
-    { title: 'Naruto Shippuden', image: 'assets/img/anime2.jpg', status: 'Vue', themes: ['Shonen', 'Combat'] },
-    { title: 'Zombieland Saga', image: 'assets/img/anime3.webp', status: 'Vue', themes: ['Idol', 'Humour'] },
-    { title: 'One Piece', image: 'assets/img/anime4.jpg', status: 'Vue', themes: ['Aventure', 'Action'] },
-    { title: 'Dandadan', image: 'assets/img/anime5.webp', status: 'À regarder plus tard', themes: ['Surnaturel'] },
-    { title: 'Konosuba', image: 'assets/img/anime6.webp', status: 'À regarder plus tard', themes: ['Isekai', 'Comedy'] },
-    { title: 'L\'attaque des Titans', image: 'assets/img/anime7.jpg', status: 'En pause', themes: ['Guerre', 'Drame'] },
-    { title: 'Your Name', image: 'assets/img/anime8.webp', status: 'En pause', themes: ['Film', 'Romance'] },
-    { title: 'Tokyo Ghoul', image: 'assets/img/anime1.jpg', status: 'En pause', themes: ['Action', 'Drame'] },
-    { title: 'Naruto Shippuden', image: 'assets/img/anime2.jpg', status: 'Abandonné', themes: ['Shonen', 'Combat'] },
-    { title: 'Zombieland Saga', image: 'assets/img/anime3.webp', status: 'Abandonné', themes: ['Idol', 'Humour'] },
-    { title: 'One Piece', image: 'assets/img/anime4.jpg', status: 'En train de regarder', themes: ['Aventure', 'Action'] },
-    { title: 'Dandadan', image: 'assets/img/anime5.webp', status: 'En train de regarder', themes: ['Surnaturel'] },
-    { title: 'Konosuba', image: 'assets/img/anime6.webp', status: 'Vue', themes: ['Isekai', 'Comedy'] },
-    { title: 'L\'attaque des Titans', image: 'assets/img/anime7.jpg', status: 'En train de regarder', themes: ['Guerre', 'Drame'] },
-    { title: 'Your Name', image: 'assets/img/anime8.webp', status: 'Vue', themes: ['Film', 'Romance'] }
+    { title: 'Tokyo Ghoul', image: 'assets/img/anime1.jpg', status: 'Watching', themes: ['Action', 'Drame'], score: 7.8, episodes: 12 },
+    { title: 'Naruto Shippuden', image: 'assets/img/anime2.jpg', status: 'Watching', themes: ['Shonen', 'Combat'], score: 8.5, episodes: 200 },
+    { title: 'Zombieland Saga', image: 'assets/img/anime3.webp', status: 'Watching', themes: ['Idol', 'Humour'], score: 7.5, episodes: 12 },
+    { title: 'One Piece', image: 'assets/img/anime4.jpg', status: 'Watching', themes: ['Aventure', 'Action'], score: 9.7, episodes: 1200 },
+    { title: 'Dandadan', image: 'assets/img/anime5.webp', status: 'Plan to watch', themes: ['Surnaturel'], score: 9.1, episodes: 24 },
+    { title: 'Konosuba', image: 'assets/img/anime6.webp', status: 'Plan to watch', themes: ['Isekai', 'Comedy'], score: 7.2, episodes: 13 },
+    { title: 'L\'attaque des Titans', image: 'assets/img/anime7.jpg', status: 'En pause', themes: ['Guerre', 'Drame'] , score: 9.1, episodes: 24},
+    { title: 'Your Name', image: 'assets/img/anime8.webp', status: 'On hold', themes: ['Film', 'Romance'] , score: 9.6, episodes: 1},
+    { title: 'Tokyo Ghoul', image: 'assets/img/anime1.jpg', status: 'On hold', themes: ['Action', 'Drame'] , score: 7.8, episodes: 12},
+    { title: 'Naruto Shippuden', image: 'assets/img/anime2.jpg', status: 'Dropped', themes: ['Shonen', 'Combat'] , score: 8.5, episodes: 200 },
+    { title: 'Zombieland Saga', image: 'assets/img/anime3.webp', status: 'Dropped', themes: ['Idol', 'Humour'],score: 7.5, episodes: 12  },
+    { title: 'One Piece', image: 'assets/img/anime4.jpg', status: 'Completed', themes: ['Aventure', 'Action'],score: 9.7, episodes: 1200 },
+    { title: 'Dandadan', image: 'assets/img/anime5.webp', status: 'Completed', themes: ['Surnaturel'], score: 9.1, episodes: 24  },
+    { title: 'Konosuba', image: 'assets/img/anime6.webp', status: 'Watching', themes: ['Isekai', 'Comedy'],score: 7.2, episodes: 13 },
+    { title: 'L\'attaque des Titans', image: 'assets/img/anime7.jpg', status: 'Completed', themes: ['Guerre', 'Drame'],score: 9.1, episodes: 24 },
+    { title: 'Your Name', image: 'assets/img/anime8.webp', status: 'Watching', themes: ['Film', 'Romance'], score: 9.6, episodes: 1 }
   ];
 
-categories = ['Tout', 'Vue', 'En train de regarder', 'À regarder plus tard', 'En pause', 'Abandonné'];
-  
-  // On génère la liste des thèmes dynamiquement à partir des données
-  themesList = ['Tous les thèmes', 'Action', 'Aventure', 'Comédie', 'Drame', 'Romance', 'Surnaturel', 'Isekai'];
+ // Listes pour les filtres
+  categories = ['All', 'Completed', 'Watching', 'Plan to watch', 'On hold', 'Dropped'];
+  themesList = ['Tous les thèmes', 'Action', 'Aventure', 'Comédie', 'Drame', 'Romance', 'Surnaturel', 'Isekai', 'Shonen'];
 
-  selectedCategory = 'Tout';
+  // États actuels
+  selectedCategory = 'All';
   selectedTheme = 'Tous les thèmes';
+  sortType: 'alpha' | 'score' | 'episodes' = 'alpha';
   sortOrder: 'asc' | 'desc' = 'asc';
+  
   filteredAnimes = [...this.animes];
 
   constructor() {
     this.applyFilters();
   }
 
+  // Gère le filtrage Statut + Thème
   applyFilters() {
     let result = [...this.animes];
 
-    // 1. Filtre par Statut (Vue, En pause...)
-    if (this.selectedCategory !== 'Tout') {
+    if (this.selectedCategory !== 'All') {
       result = result.filter(a => a.status === this.selectedCategory);
     }
 
-    // 2. Filtre par Thème (Action, Drame...)
     if (this.selectedTheme !== 'Tous les thèmes') {
       result = result.filter(a => a.themes.includes(this.selectedTheme));
     }
@@ -72,16 +73,25 @@ categories = ['Tout', 'Vue', 'En train de regarder', 'À regarder plus tard', 'E
     this.applyFilters();
   }
 
-  toggleSort() {
-    this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+  // Gère le changement de type de tri
+  setSortType(type: 'alpha' | 'score' | 'episodes') {
+    if (this.sortType === type) {
+      this.sortOrder = this.sortOrder === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortType = type;
+      this.sortOrder = (type === 'alpha') ? 'asc' : 'desc';
+    }
     this.applySort();
   }
 
   applySort() {
     this.filteredAnimes.sort((a, b) => {
-      const tA = a.title.toLowerCase();
-      const tB = b.title.toLowerCase();
-      return this.sortOrder === 'asc' ? tA.localeCompare(tB) : tB.localeCompare(tA);
+      let comp = 0;
+      if (this.sortType === 'alpha') comp = a.title.toLowerCase().localeCompare(b.title.toLowerCase());
+      else if (this.sortType === 'score') comp = a.score - b.score;
+      else if (this.sortType === 'episodes') comp = a.episodes - b.episodes;
+      
+      return this.sortOrder === 'asc' ? comp : -comp;
     });
   }
 }
