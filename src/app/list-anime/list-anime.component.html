@@ -1,25 +1,47 @@
 <div class="liste-container">
   
   <div class="filter-chips">
-    <div class="chip" *ngFor="let cat of categories">{{ cat }}</div>
+    <div class="chip statut" 
+         *ngFor="let cat of categories" 
+         (click)="filterByCategory(cat)"
+         [class.active]="selectedCategory === cat">
+      {{ cat }}
+    </div>
+  </div>
+
+  <div class="filter-chips themes-bar">
+    <div class="chip theme" 
+         *ngFor="let t of themesList" 
+         (click)="filterByTheme(t)"
+         [class.active]="selectedTheme === t">
+      {{ t }}
+    </div>
   </div>
 
   <hr class="separator">
 
-  <div class="filter-action">
-    <mat-icon>filter_alt</mat-icon>
-    <button class="btn-filtre">Filtre</button>
+  <div class="filter-action" (click)="toggleSort()">
+    <mat-icon>{{ sortOrder === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+    <button class="btn-filtre">Tri : {{ sortOrder === 'asc' ? 'A-Z' : 'Z-A' }}</button>
   </div>
 
-  <div class="anime-grid">
-    <div class="anime-card" *ngFor="let anime of animes">
+  <div class="anime-grid" *ngIf="filteredAnimes.length > 0">
+    <div class="anime-card" *ngFor="let anime of filteredAnimes">
       <img [src]="anime.image" [alt]="anime.title">
       <div class="anime-overlay">
         <span class="anime-title">{{ anime.title }}</span>
+        <div class="theme-tags">
+          <span class="tag" *ngFor="let theme of anime.themes">{{ theme }}</span>
+        </div>
       </div>
     </div>
   </div>
 
-  <app-tab-bar></app-tab-bar>
+  <div class="no-results" *ngIf="filteredAnimes.length === 0">
+    <mat-icon>search_off</mat-icon>
+    <p>Aucun anime trouvé</p>
+    <span>Essayez de modifier vos filtres</span>
+  </div>
 
 </div>
+<app-tab-bar></app-tab-bar>
