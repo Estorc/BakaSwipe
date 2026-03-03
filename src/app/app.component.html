@@ -1,15 +1,4 @@
 
-<div class="button-group" *ngIf="router.url !== '/swipe'">
-  <input matInput placeholder="Anime Name" [(ngModel)]="animeName" />
-  <button mat-raised-button (click)="onSearchAnime()" *ngIf="isConnected()">Search Anime</button>
-</div>
-
-<div>
-  <anime-card
-    *ngFor="let anime of animes"
-    [anime]="anime"></anime-card>
-  <p #log id="log"></p>
-</div>
 
 <router-outlet></router-outlet>
 

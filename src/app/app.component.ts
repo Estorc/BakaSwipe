@@ -20,10 +20,7 @@ import { TabBarComponent } from "./tab-bar/tab-bar.component";
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    FormsModule,
-    NgFor,
-    NgIf,
-    AnimeCardComponent
+    FormsModule
 ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
