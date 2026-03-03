@@ -124,4 +124,32 @@ export class SessionService {
       console.error('Erreur lors de la recherche:', error);
     }
   }
+
+
+  async suggest(): Promise<any> {
+
+    if (!this.sessionId) {
+      console.log('Session expirée. Veuillez vous reconnecter.');
+      return null;
+    }
+
+    const options = { limit : 10, offset : 0};
+
+    try {
+      const res = await fetch(`${SERVER_IP}/suggest`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId, options })
+      });
+
+      const data = await res.json();
+
+      console.log(`Résultats :`, data.results);
+
+      return data.results;
+
+    } catch (error) {
+      console.error('Erreur lors de la recherche:', error);
+    }
+  }
 }
