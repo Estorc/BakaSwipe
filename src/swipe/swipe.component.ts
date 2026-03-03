@@ -14,7 +14,6 @@ import { TabBarComponent } from '../app/tab-bar/tab-bar.component';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    RouterLink,
     TabBarComponent
   ],
   templateUrl: './swipe.component.html',

@@ -23,8 +23,7 @@ import { TabBarComponent } from "./tab-bar/tab-bar.component";
     FormsModule,
     NgFor,
     NgIf,
-    AnimeCardComponent,
-    TabBarComponent
+    AnimeCardComponent
 ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
