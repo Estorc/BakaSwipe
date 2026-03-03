@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common'; // ✅ à ajouter
+import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +10,7 @@ import { TabBarComponent } from '../app/tab-bar/tab-bar.component';
   selector: 'app-swipe',
   standalone: true,
   imports: [
-    CommonModule,      // ✅ indispensable pour ngStyle, ngIf, ngFor…
+    CommonModule,
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
