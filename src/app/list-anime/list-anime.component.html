@@ -1,28 +1,32 @@
 <div class="liste-container">
   
   <div class="filter-chips">
-    <div class="chip statut" 
-         *ngFor="let cat of categories" 
-         (click)="filterByCategory(cat)"
-         [class.active]="selectedCategory === cat">
+    <div class="chip" *ngFor="let cat of categories" 
+         (click)="filterByCategory(cat)" [class.active]="selectedCategory === cat">
       {{ cat }}
     </div>
   </div>
 
   <div class="filter-chips themes-bar">
-    <div class="chip theme" 
-         *ngFor="let t of themesList" 
-         (click)="filterByTheme(t)"
-         [class.active]="selectedTheme === t">
+    <div class="chip theme" *ngFor="let t of themesList" 
+         (click)="filterByTheme(t)" [class.active]="selectedTheme === t">
       {{ t }}
     </div>
   </div>
 
   <hr class="separator">
 
-  <div class="filter-action" (click)="toggleSort()">
-    <mat-icon>{{ sortOrder === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
-    <button class="btn-filtre">Tri : {{ sortOrder === 'asc' ? 'A-Z' : 'Z-A' }}</button>
+  <div class="sort-bar">
+    <span class="sort-label">Trier :</span>
+    <button class="sort-btn" [class.active]="sortType === 'alpha'" (click)='setSortType("alpha")'>
+      Name <mat-icon *ngIf="sortType === 'alpha'">{{ sortOrder === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+    </button>
+    <button class="sort-btn" [class.active]="sortType === 'score'" (click)='setSortType("score")'>
+      Note <mat-icon *ngIf="sortType === 'score'">{{ sortOrder === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+    </button>
+    <button class="sort-btn" [class.active]="sortType === 'episodes'" (click)='setSortType("episodes")'>
+      Eps <mat-icon *ngIf="sortType === 'episodes'">{{ sortOrder === 'asc' ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+    </button>
   </div>
 
   <div class="anime-grid" *ngIf="filteredAnimes.length > 0">
@@ -30,6 +34,10 @@
       <img [src]="anime.image" [alt]="anime.title">
       <div class="anime-overlay">
         <span class="anime-title">{{ anime.title }}</span>
+        <div class="anime-info">
+          <span>⭐ {{ anime.score }}</span>
+          <span>{{ anime.episodes }} eps</span>
+        </div>
         <div class="theme-tags">
           <span class="tag" *ngFor="let theme of anime.themes">{{ theme }}</span>
         </div>
@@ -39,8 +47,7 @@
 
   <div class="no-results" *ngIf="filteredAnimes.length === 0">
     <mat-icon>search_off</mat-icon>
-    <p>Aucun anime trouvé</p>
-    <span>Essayez de modifier vos filtres</span>
+    <p>No anime found</p>
   </div>
 
 </div>
