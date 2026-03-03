@@ -18,13 +18,29 @@ body, html {
   flex-direction: column;
 }
 
+.stack {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  flex: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+}
+
 .hero {
+  --bg: url(https://mediaproxy.tvtropes.org/width/1200/https://static.tvtropes.org/pmwiki/pub/images/madokamagicabig.png);
   position: relative;
   flex: 1;
   top: 0;
   left: 0;
   width: 100%;
-  background: url(https://mediaproxy.tvtropes.org/width/1200/https://static.tvtropes.org/pmwiki/pub/images/madokamagicabig.png);
+  background: var(--bg);
   background-position: center;
   background-size: cover;
   display: flex;
@@ -39,7 +55,7 @@ body, html {
 }
 
 .hero::before {
-  background: linear-gradient( to bottom, rgba(1, 1, 1, 0.2), rgba(1, 1, 1, 0.9019607843)), url(https://mediaproxy.tvtropes.org/width/1200/https://static.tvtropes.org/pmwiki/pub/images/madokamagicabig.png) center/auto 100% no-repeat;
+  background: linear-gradient( to bottom, rgba(1, 1, 1, 0.2), rgba(1, 1, 1, 0.9019607843)), var(--bg) center/auto 100% no-repeat;
   position: absolute;
   content: "";
   left: 0;

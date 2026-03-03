@@ -1,31 +1,34 @@
 <div class="container">
-  <div 
-    class="hero" 
-    [ngStyle]="{'transform-origin': 'bottom center', 'transform': 'translateY(' + y + 'px) rotate(' + rotation + 'deg)'}"
-    (pointerdown)="startDrag($event)"
-    (pointermove)="onDrag($event)"
-    (pointerup)="endDrag($event)"
-    (pointercancel)="endDrag($event)"
-  >
-    <div class="title">Attack on Titan</div>
+  <div *ngIf="cards[currentIndex]" class="stack">
+    <!-- seule la carte du dessus est interactive -->
+    <div
+      #hero
+      class="hero"
+      [style.--bg]="'url(' + cards[currentIndex].image + ')'"
+      [class.dragging]="dragging"
+      [class.animating]="animating"
+      (pointerdown)="startDrag($event)"
+      (pointermove)="onDrag($event)"
+      (pointerup)="endDrag($event)"
+      (pointercancel)="endDrag($event)"
+      (click)="onClick()"
+      [style.transform]="'translate(' + x + 'px, ' + y + 'px) rotate(' + rotation + 'deg)'"
+    >
+      <div class="title">{{ cards[currentIndex].title }}</div>
 
-    <div class="meta">
-      <div class="tag">Aventure</div>
-      <div>54 épisodes</div>
-      <div class="rating">⭐ 4.8</div>
-    </div>
+      <div class="meta">
+        <div class="tag">{{ cards[currentIndex].tag }}</div>
+        <div>{{ cards[currentIndex].episodes }}</div>
+        <div class="rating">{{ cards[currentIndex].rating }}</div>
+      </div>
 
-    <div class="desc">
-      Des humains luttent pour leur survie contre des titans mangeurs
-      d'hommes dans un monde…
-    </div>
+      <div class="desc">{{ cards[currentIndex].desc }}</div>
 
-    <div class="eyes">
-      <div class="eye"></div>
-      <div class="eye"></div>
-      <div class="eye"></div>
-      <div class="eye"></div>
+      <div class="eyes">
+        <div class="eye" *ngFor="let i of [1,2,3,4]"></div>
+      </div>
     </div>
   </div>
+
   <app-tab-bar></app-tab-bar>
 </div>
