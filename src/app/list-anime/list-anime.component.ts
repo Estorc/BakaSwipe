@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { TabBarComponent } from '../tab-bar/tab-bar.component';
 
 @Component({
   selector: 'app-liste',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatChipsModule],
+  imports: [CommonModule, MatIconModule, MatChipsModule, TabBarComponent],
   templateUrl: './list-anime.component.html',
   styleUrls: ['./list-anime.component.scss']
 })
