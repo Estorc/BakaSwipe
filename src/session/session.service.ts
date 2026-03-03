@@ -133,7 +133,7 @@ export class SessionService {
       return null;
     }
 
-    const options = { limit : 10, offset : 0};
+    const options = { limit : 100, offset : 0};
 
     try {
       const res = await fetch(`${SERVER_IP}/suggest`, {
