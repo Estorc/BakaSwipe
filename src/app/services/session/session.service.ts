@@ -50,6 +50,10 @@ export class SessionService {
     }
   }
 
+  getSessionId(): string | null {
+    return this.sessionId;
+  }
+
   async createSession(): Promise<void> {
     const res = await fetch(`${SERVER_IP}/create-session`, {
       method: 'POST',
