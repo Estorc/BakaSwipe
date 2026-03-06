@@ -31,6 +31,7 @@ interface Card {
 })
 export class SwipeComponent {
 
+
   parsingCards(results: any[]): Card[] {
     return results.map(item => ({
       title: item.node.title,
@@ -118,6 +119,21 @@ export class SwipeComponent {
     this.x = 0;
     this.y = 0;
     this.rotation = 0;
+  }
+
+
+  cross() {
+      this.currentIndex++;
+      if (this.currentIndex >= this.cards.length) {
+        this.currentIndex = 0;
+      }
+  }
+
+  heart() {
+      this.currentIndex++;
+      if (this.currentIndex >= this.cards.length) {
+        this.currentIndex = 0;
+      }
   }
 
   onClick() {
