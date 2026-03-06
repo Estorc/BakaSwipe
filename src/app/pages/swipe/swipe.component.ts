@@ -55,28 +55,28 @@ export class SwipeComponent {
 
   cards: Card[] = [
     {
-      title: 'Attack on Titan',
-      tag: 'Action',
+      title: 'L\'API à crash',
+      tag: 'Victor est magnifique',
       episodes: '67 épisodes',
-      rating: '⭐ 8.9',
-      desc: 'Des humains luttent contre des titans et les titans mangent les humains.',
-      image: 'https://fr.web.img6.acsta.net/pictures/20/12/28/10/24/5603983.jpg'
+      rating: '⭐ 6.9',
+      desc: 'Skibidi skibidi hawk tuah hawk',
+      image: 'https://cdn.pixabay.com/photo/2019/03/31/20/39/foal-4093986_1280.jpg'
     },
     {
-      title: 'Boku no Hero Academia',
-      tag: 'Shonen',
-      episodes: '138 épisodes',
+      title: 'L\'API à crash',
+      tag: 'Allez stream deadline',
+      episodes: 'Cébastien épisodes',
       rating: '⭐ 8.4',
-      desc: 'Des élèves apprennent à devenir des héros.',
-      image: 'https://static.wikia.nocookie.net/bokunoheroacademia/images/e/e9/Heroes_Rising_Promotional_Poster_2.png/revision/latest?cb=20200314090705&path-prefix=fr'
+      desc: '4 goats qui chantent',
+      image: 'https://www.rollingstone.fr/wp-content/uploads/2026/03/blackpink-deadline-review.jpg'
     },
     {
-      title: 'One Piece',
-      tag: 'Aventure',
-      episodes: '1000+ épisodes',
-      rating: '⭐ 10.0',
-      desc: 'Luffy cherche le One Piece.',
-      image: 'https://i.redd.it/tkvidtjd4tj61.jpg'
+      title: 'L\'API à crash',
+      tag: 'Mario 64',
+      episodes: '∞ épisodes',
+      rating: '⭐ 999999',
+      desc: 'Kaze Emmanuar, le Dieu unique de ce monde oblitère l\'humanité',
+      image: 'https://i.ytimg.com/vi/QbuoUH7TnvM/sddefault.jpg'
     }
   ];
 

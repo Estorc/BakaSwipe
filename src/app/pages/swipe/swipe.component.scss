@@ -95,30 +95,9 @@
   font-size: 14px;
   line-height: 1.4;
   color: #ddd;
-  margin-bottom: 20px;
+  margin-bottom: 100px;
 }
 
-.eyes {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-.eye {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.eye::before {
-  content: "👁";
-  font-size: 20px;
-}
 
 .nav {
   position: absolute;
