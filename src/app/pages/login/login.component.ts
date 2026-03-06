@@ -12,17 +12,20 @@ export class LoginComponent {
   constructor(private session: SessionService) {
     if (this.session.isConnected()) {
       // Redirect to /swipe
+      this.skipLogin();
+    }
+  }
+
+  async skipLogin() {
+    if (await this.session.checkSession(this.session.getSessionId())) {
+      // L'utilisateur est maintenant connecté, vous pouvez rediriger
       window.location.href = '/swipe';
     }
   }
 
 
-
   async onConnectClick() {
     await this.session.connect(); // doit compiler (connect existe dans le service)
-    if (await this.session.checkSession(this.session.getSessionId())) {
-      // L'utilisateur est maintenant connecté, vous pouvez rediriger
-      window.location.href = '/swipe';
-    }
+    this.skipLogin();
   }
 }
