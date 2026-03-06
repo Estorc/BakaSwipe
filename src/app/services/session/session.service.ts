@@ -50,6 +50,45 @@ export class SessionService {
     }
   }
 
+  async isSessionValid(): Promise<boolean> {
+    if (!this.sessionId) return false;
+    try {
+      const res = await fetch(`${SERVER_IP}/session-logged-in`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId })
+      });
+      return res.status === 200;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  async getAnimeDetails(malId: number): Promise<any> {
+    if (!this.sessionId) {
+      console.log('Session expirée. Veuillez vous reconnecter.');
+      return null;
+    }
+
+    try {
+      const res = await fetch(`${SERVER_IP}/details`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId, animeId: malId })
+      });
+
+      const data = await res.json();
+
+      console.log(`Détails pour MAL ID ${malId}:`, data);
+
+      return data;
+
+    } catch (error) {
+      console.error('Erreur lors de la récupération des détails:', error);
+    }
+  }
+
   getSessionId(): string | null {
     return this.sessionId;
   }
