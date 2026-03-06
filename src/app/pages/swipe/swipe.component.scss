@@ -1,19 +1,15 @@
-* {
+:host {
+  position: relative;
+  flex: 1;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body, html {
-  width: 100%;
-  height: 100%;
-}
-
 .container {
   position: relative;
   width: 100%;
-  height: 100vh; // plein écran
-  overflow: hidden;
+  height: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -52,6 +48,8 @@ body, html {
   touch-action: none;
   cursor: grab;
   transition: transform 50ms;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 .hero::before {

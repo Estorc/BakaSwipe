@@ -27,7 +27,14 @@
     --pill-accent: var(--bright-blue);
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+
 
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;

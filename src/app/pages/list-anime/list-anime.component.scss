@@ -1,7 +1,17 @@
+:host {
+  position: relative;
+  flex: 1;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .liste-container {
+  position: absolute;
   padding: 10px;
   background-color: #111111;
-  min-height: 90vh;
+  top: 0;
+  bottom: 0;
 }
 
 .filter-chips {
@@ -26,7 +36,7 @@
     &.active {
       background-color: #fff;
       color: #111;
-      font-weight: normal; 
+      font-weight: normal;
     }
   }
 }

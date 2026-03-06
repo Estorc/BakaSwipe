@@ -1,3 +1,11 @@
+:host {
+  position: relative;
+  flex: 1;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .login-container {
   display: flex;
   justify-content: center;
@@ -21,9 +29,9 @@
 
 .logo {
   display: block;
-  margin: auto; 
+  margin: auto;
   margin-top: 10%;
-  width: 90%;     
-  height: auto;  
-  border-radius: 50px;  
+  width: 90%;
+  height: auto;
+  border-radius: 50px;
 }
