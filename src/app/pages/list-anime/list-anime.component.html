@@ -1,14 +1,14 @@
 <div class="liste-container">
-  
+
   <div class="filter-chips">
-    <div class="chip" *ngFor="let cat of categories" 
+    <div class="chip" *ngFor="let cat of categories"
          (click)="filterByCategory(cat)" [class.active]="selectedCategory === cat">
       {{ cat }}
     </div>
   </div>
 
   <div class="filter-chips themes-bar">
-    <div class="chip theme" *ngFor="let t of themesList" 
+    <div class="chip theme" *ngFor="let t of themesList"
          (click)="filterByTheme(t)" [class.active]="selectedTheme === t">
       {{ t }}
     </div>
@@ -51,4 +51,4 @@
   </div>
 
 </div>
-<app-tab-bar></app-tab-bar>
+

@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { TabBarComponent } from '../tab-bar/tab-bar.component';
 
 @Component({
   selector: 'app-liste',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatChipsModule,TabBarComponent],
+  imports: [CommonModule, MatIconModule, MatChipsModule],
   templateUrl: './list-anime.component.html',
   styleUrls: ['./list-anime.component.scss']
 })
@@ -40,7 +39,7 @@ export class ListAnimeComponent {
   selectedTheme = 'Tous les thèmes';
   sortType: 'alpha' | 'score' | 'episodes' = 'alpha';
   sortOrder: 'asc' | 'desc' = 'asc';
-  
+
   filteredAnimes = [...this.animes];
 
   constructor() {
@@ -90,7 +89,7 @@ export class ListAnimeComponent {
       if (this.sortType === 'alpha') comp = a.title.toLowerCase().localeCompare(b.title.toLowerCase());
       else if (this.sortType === 'score') comp = a.score - b.score;
       else if (this.sortType === 'episodes') comp = a.episodes - b.episodes;
-      
+
       return this.sortOrder === 'asc' ? comp : -comp;
     });
   }

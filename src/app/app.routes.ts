@@ -1,8 +1,8 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from '../login/login.component';
-import { SwipeComponent } from '../swipe/swipe.component';
-import { ListAnimeComponent } from './list-anime/list-anime.component';
-import { Error404Component } from './error404/error404.component';
+import { LoginComponent } from './pages/login/login.component';
+import { SwipeComponent } from './pages/swipe/swipe.component';
+import { ListAnimeComponent } from './pages/list-anime/list-anime.component';
+import { Error404Component } from './pages/error404/error404.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },

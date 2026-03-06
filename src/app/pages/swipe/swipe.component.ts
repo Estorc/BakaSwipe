@@ -3,9 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink, Router } from '@angular/router'; 
-import { TabBarComponent } from '../app/tab-bar/tab-bar.component';
-import { SessionService } from '../session/session.service';
+import { RouterLink, Router } from '@angular/router';
+import { SessionService } from '../../services/session/session.service';
 
 interface Card {
   title: string;
@@ -26,7 +25,6 @@ interface Card {
     MatIconModule,
     MatButtonModule,
     RouterLink,
-    TabBarComponent
   ],
   templateUrl: './swipe.component.html',
   styleUrls: ['./swipe.component.scss'],

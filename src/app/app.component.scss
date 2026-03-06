@@ -26,6 +26,9 @@
 
     --pill-accent: var(--bright-blue);
 
+    display: flex;
+    justify-content: center;
+
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

@@ -19,7 +19,7 @@ export class SessionService {
         console.log(`Already connected!`)
       } else {
         this.sessionId = null;
-        console.log( `Session ID found but expired. Please create a new session.\n`);
+        console.log(`Session ID found but expired. Please create a new session.\n`);
       }
     } else {
       this.sessionId = null;
@@ -31,7 +31,7 @@ export class SessionService {
     sessionStorage.setItem('sessionId', JSON.stringify(this.sessionId));
   }
 
-  isConnected() : boolean {
+  isConnected(): boolean {
     return this.sessionId != null;
   }
 
@@ -94,7 +94,7 @@ export class SessionService {
     }
   }
 
-  async search(animeName : string): Promise<any> {
+  async search(animeName: string): Promise<any> {
     if (!animeName) {
       console.log('Veuillez entrer un nom d’anime.');
       return null;
@@ -105,7 +105,7 @@ export class SessionService {
       return null;
     }
 
-    const options = { q: animeName, limit: 10, nsfw : true};
+    const options = { q: animeName, limit: 10, nsfw: true };
 
     try {
       const res = await fetch(`${SERVER_IP}/search-anime`, {
@@ -133,7 +133,7 @@ export class SessionService {
       return null;
     }
 
-    const options = { limit : 10, offset : 0};
+    const options = { limit: 10, offset: 0 };
 
     try {
       const res = await fetch(`${SERVER_IP}/suggest`, {

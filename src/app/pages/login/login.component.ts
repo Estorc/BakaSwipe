@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { SessionService } from '../session/session.service'; // <- chemin CORRECT
-import { TabBarComponent } from '../app/tab-bar/tab-bar.component';
+import { SessionService } from '../../services/session/session.service'; // <- chemin CORRECT
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [TabBarComponent],
+  imports: [],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })

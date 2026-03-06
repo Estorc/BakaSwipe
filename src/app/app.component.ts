@@ -1,16 +1,12 @@
 // app.component.ts
 import { Component } from '@angular/core';
-import { SessionService } from '../session/session.service';
+import { SessionService } from './services/session/session.service';
 import { RouterOutlet, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
-import { AnimeCardComponent } from '../anime-card/anime-card.component';
-import { TabBarComponent } from "./tab-bar/tab-bar.component";
-
-
+import { TabBarComponent } from './components/tab-bar/tab-bar.component';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +16,8 @@ import { TabBarComponent } from "./tab-bar/tab-bar.component";
     MatButtonModule,
     MatMenuModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    TabBarComponent,
 ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -30,7 +27,7 @@ export class AppComponent {
   animes: any[] = [];
 
   constructor(public router: Router, private session: SessionService) {
-  
+
   }
 
   goTo(page: string) {
