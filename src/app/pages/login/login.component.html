@@ -1,6 +1,9 @@
-<div class="login-container">
-  <button class="btn" (click)="onConnectClick()">Se connecter</button>
+<div class="video-container">
+  <video autoplay muted loop playsinline class="background-video">
+    <source src="assets/video/backgroundlogin.mp4" type="video/mp4">
+  </video>
+  
+  <div class="overlay" (click)="onConnectClick()">
+    <h1>Tap to connect</h1>
+  </div>
 </div>
-
-
-<img src="assets/img/logo-bakaswipe.svg" alt="BakaSwipe Logo" class="logo">
