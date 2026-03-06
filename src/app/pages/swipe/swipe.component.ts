@@ -31,15 +31,27 @@ interface Card {
 })
 export class SwipeComponent {
 
+  parsingDetails(card: Card): void {
+    card.tag = card.tag || "";
+    card.episodes = `${card.tag} épisodes`;
+    card.rating = `⭐ ${card.rating}`;
+    card.desc = `${card.desc}`;
+  }
+
   parsingCards(results: any[]): Card[] {
-    return results.map(item => ({
-      title: item.node.title,
-      tag: "UF",
-      episodes: `${"UF"} épisodes`,
-      rating: `⭐ ${"UF"}`,
-      desc: "UF",
-      image: item.node.main_picture.large
-    }));
+    return results.map(item => {
+
+      let card: Card = {
+        title: item.node.title,
+        tag: "",
+        episodes: ``,
+        rating: ``,
+        desc: "",
+        image: item.node.main_picture.large
+      }
+      this.parsingDetails(card);
+      return card;
+    });
   }
 
   constructor(private sessionService: SessionService) {

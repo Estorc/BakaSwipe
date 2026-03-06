@@ -17,7 +17,7 @@ export class LoginComponent {
   }
 
   async skipLogin() {
-    if (await this.session.checkSession(this.session.getSessionId())) {
+    if (await this.session.checkSession(this.session.getSessionId()) && await this.session.isSessionValid()) {
       // L'utilisateur est maintenant connecté, vous pouvez rediriger
       window.location.href = '/swipe';
     }
