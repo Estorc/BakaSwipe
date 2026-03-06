@@ -1,3 +1,4 @@
+
 :host {
   position: relative;
   flex: 1;
@@ -6,32 +7,58 @@
   padding: 0;
 }
 
-.login-container {
+
+.video-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  z-index: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.1); /* noir transparent */
+
+
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 40%;
-}
 
-.btn {
-  background: #59CCD9;
-  color: #F2F2F2;
-  padding: 0.8rem 2rem;
-  border: none;
-  border-radius: 50px;
-  font-size: 250%;
   cursor: pointer;
+  z-index: 2;
+  backdrop-filter: blur(2px);
+
 }
 
-.btn:hover {
-  background: #3c8a92;
+
+.overlay h1 {
+  color: black;
+  text-shadow:
+    2px 2px 0 white,
+   -2px 2px 0 white,
+    2px -2px 0 white,
+   -2px -2px 0 white;
+  font-size: 3rem;
+  text-align: center;
 }
 
-.logo {
-  display: block;
-  margin: auto;
-  margin-top: 10%;
-  width: 90%;
-  height: auto;
-  border-radius: 50px;
-}
