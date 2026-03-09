@@ -26,5 +26,58 @@
       
     </div>
   </div>
+<div class="description-sheet" [class.is-open]="showDescription">
+  <div class="drag-handle" (click)="showDescription = false"></div>
 
+  <div class="sheet-scroll-content">
+    <div class="section">
+      <h1 class="sheet-main-title">{{ cards[currentIndex].title }}</h1>
+      <h3>Description</h3>
+      <p class="text-muted">{{ cards[currentIndex].desc }}</p>
+    </div>
+
+    <div class="section-full-width">
+      <div class="section"><h3>Themes</h3></div>
+      <div class="theme-chips">
+        <span class="chip-ios">Action</span>
+        <span class="chip-ios">Shonen</span>
+        <span class="chip-ios">Mystère</span>
+        <span class="chip-ios">Psychologique</span>
+        <span class="chip-ios">Surnaturel</span>
+        <span class="chip-ios">Drame</span>
+      </div>
+    </div>
+
+    <div class="section-full-width">
+      <div class="section"><h3>Status</h3></div>
+      <div class="status-container">
+        <button 
+          *ngFor="let status of statusList"
+          class="btn-status"
+          [class.active]="selectedStatus === status"
+          (click)="selectStatus(status)">
+          {{ status }}
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Bandes annonces</h3>
+      <div class="trailer-preview">
+        <img [src]="cards[currentIndex].image" alt="trailer">
+        <div class="play-overlay"><mat-icon>play_arrow</mat-icon></div>
+      </div>
+    </div>
+
+    <div class="section rating-section">
+      <h3>Note</h3>
+      <div class="custom-slider">
+        <input type="range" min="1" max="10" step="1" [(ngModel)]="ratingValue">
+        <div class="heart-indicator" [style.left.%]="(ratingValue - 1) * 11.11">
+          <mat-icon>favorite</mat-icon>
+          <span class="note-label">{{ ratingValue }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
