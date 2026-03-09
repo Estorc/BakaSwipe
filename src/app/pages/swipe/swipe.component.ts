@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink, Router } from '@angular/router';
 import { SessionService } from '../../services/session/session.service';
+import { FormsModule} from '@angular/forms'
 
 interface Card {
   id: number;
@@ -26,6 +27,7 @@ interface Card {
     MatIconModule,
     MatButtonModule,
     RouterLink,
+    FormsModule,
   ],
   templateUrl: './swipe.component.html',
   styleUrls: ['./swipe.component.scss'],
@@ -67,9 +69,6 @@ export class SwipeComponent {
 
   @ViewChild('hero') heroRef!: ElementRef<HTMLElement>;
 
-  animating = false;
-  dragging = false;
-
   cards: Card[] = [
     {
       id: 0,
@@ -100,15 +99,25 @@ export class SwipeComponent {
     }
   ];
 
+  animating = false;
+  dragging = false;
   currentIndex = 0;
-
+  showDescription = false;
+  ratingValue = 8;
+  selectedStatus: string = '';
   x = 0;
   y = 0;
   rotation = 0;
   startX = 0;
   startY = 0;
-
+  
+  statusList = ['Watching', 'Completed', 'Plan to watch', 'On hold', 'Dropped'];
+  selectStatus(status: string) {
+    this.selectedStatus = status;
+    console.log('Statut sélectionné :', status);
+  }
   startDrag(event: PointerEvent) {
+    if (this.showDescription) return;
     this.dragging = true;
     this.startX = event.clientX - this.x;
     this.startY = event.clientY - this.y;
@@ -127,8 +136,15 @@ export class SwipeComponent {
     this.dragging = false;
 
     this.heroRef.nativeElement.releasePointerCapture(event.pointerId);
-
-    if (this.x > 150 || this.x < -150 || this.y < -250) {
+    //DETECTION SWIPE HAUT
+    if (this.y < -100 && Math.abs(this.x) < 80){
+      this.showDescription = true;
+    }
+    //DETECTION SWIPE BAS
+    else if (this.y > 100 && this.showDescription) {
+      this.showDescription = false;
+    }
+    else if ((this.x > 150 || this.x < -150) && this.showDescription == false) {
       this.currentIndex++;
       if (this.currentIndex >= this.cards.length) {
         this.currentIndex = 0;
@@ -138,6 +154,21 @@ export class SwipeComponent {
     this.x = 0;
     this.y = 0;
     this.rotation = 0;
+  }
+
+
+  cross() {
+      this.currentIndex++;
+      if (this.currentIndex >= this.cards.length) {
+        this.currentIndex = 0;
+      }
+  }
+
+  heart() {
+      this.currentIndex++;
+      if (this.currentIndex >= this.cards.length) {
+        this.currentIndex = 0;
+      }
   }
 
   onClick() {
