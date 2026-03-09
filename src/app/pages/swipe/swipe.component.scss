@@ -376,3 +376,36 @@
     }
   }
 }
+
+.cross {
+  height: 100%;
+  width: fit-content;
+  border-radius: 50%;
+  border: 2px solid #ff6f56;
+  position: relative;
+  
+}
+
+.heart {
+  height: 100%;
+  width: fit-content;
+  border-radius: 50%;
+  border: 2px solid rgb(116, 255, 157);
+  position: relative;
+  
+}
+
+.icon_container{
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 20%;
+
+  height: 10%;
+}
+
