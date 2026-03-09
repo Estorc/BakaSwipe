@@ -17,13 +17,13 @@
       <div class="title">{{ cards[currentIndex].title }}</div>
 
       <div class="meta">
-        <div class="tag">{{ cards[currentIndex].tag }}</div>
+        <div class="tag" *ngFor="let tag of cards[currentIndex].tags">{{ tag }}</div>
         <div>{{ cards[currentIndex].episodes }}</div>
         <div class="rating">{{ cards[currentIndex].rating }}</div>
       </div>
 
       <div class="desc">{{ cards[currentIndex].desc }}</div>
-      
+
     </div>
   </div>
 

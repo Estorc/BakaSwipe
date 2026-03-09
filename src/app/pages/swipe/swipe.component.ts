@@ -7,8 +7,9 @@ import { RouterLink, Router } from '@angular/router';
 import { SessionService } from '../../services/session/session.service';
 
 interface Card {
+  id: number;
   title: string;
-  tag: string;
+  tags: Array<string>;
   episodes: string;
   rating: string;
   desc: string;
@@ -32,18 +33,22 @@ interface Card {
 export class SwipeComponent {
 
   parsingDetails(card: Card): void {
-    card.tag = card.tag || "";
-    card.episodes = `${card.tag} épisodes`;
-    card.rating = `⭐ ${card.rating}`;
-    card.desc = `${card.desc}`;
+    this.sessionService.getAnimeDetails(card.id).then(value => {
+      console.log(value);
+      card.tags = value.details.genres.map((genre: any) => genre.name).slice(0, 3);
+      card.episodes = value.details.num_episodes ? `${value.details.num_episodes} épisodes` : "";
+      card.rating = `⭐ ${value.details.mean}`;
+      card.desc = `${value.details.synopsis}`;
+    });
   }
 
   parsingCards(results: any[]): Card[] {
     return results.map(item => {
 
       let card: Card = {
+        id: item.node.id,
         title: item.node.title,
-        tag: "",
+        tags: [],
         episodes: ``,
         rating: ``,
         desc: "",
@@ -67,24 +72,27 @@ export class SwipeComponent {
 
   cards: Card[] = [
     {
+      id: 0,
       title: 'L\'API à crash',
-      tag: 'Victor est magnifique',
+      tags: ['Victor est magnifique'],
       episodes: '67 épisodes',
       rating: '⭐ 6.9',
       desc: 'Skibidi skibidi hawk tuah hawk',
       image: 'https://cdn.pixabay.com/photo/2019/03/31/20/39/foal-4093986_1280.jpg'
     },
     {
+      id: 0,
       title: 'L\'API à crash',
-      tag: 'Allez stream deadline',
+      tags: ['Allez stream deadline'],
       episodes: 'Cébastien épisodes',
       rating: '⭐ 8.4',
       desc: '4 goats qui chantent',
       image: 'https://www.rollingstone.fr/wp-content/uploads/2026/03/blackpink-deadline-review.jpg'
     },
     {
+      id: 0,
       title: 'L\'API à crash',
-      tag: 'Mario 64',
+      tags: ['Mario 64'],
       episodes: '∞ épisodes',
       rating: '⭐ 999999',
       desc: 'Kaze Emmanuar, le Dieu unique de ce monde oblitère l\'humanité',
