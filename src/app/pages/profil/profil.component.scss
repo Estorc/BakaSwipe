@@ -1,0 +1,76 @@
+:host {
+  position: relative;
+  flex: 1;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.profile-page {
+  background-color: #ffffff; // Fond blanc
+  height: 100%;   
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  overflow: hidden;
+}
+
+.header {
+  margin-top: 40px;
+  text-align: center;
+
+  .avatar-container {
+    width: 30dvh;  // On fixe une taille pour l'avatar
+    height: 30dvh;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 15px;
+    
+    .avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .pseudo {
+    font-size: 18px;
+    font-weight: 500;
+    color: #000;
+  }
+}
+
+.logout-section {
+  flex: 1;           // Prend tout l'espace central
+  display: flex;
+  align-items: center;    // Centre verticalement dans l'espace restant
+  justify-content: center; // Centre horizontalement
+
+  .logout-icon {
+    /* On utilise la même taille que l'avatar-container */
+    width: 30dvh;
+    height: 30dvh;
+    font-size: 220px; // La taille de la police définit la taille de l'icône Material
+    color: #333;
+    cursor: pointer;
+  }
+}
+
+.bottom-nav {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  background-color: #000;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  mat-icon {
+    color: #888;
+    font-size: 28px;
+    &.active { color: #fff; }
+  }
+}
