@@ -1,10 +1,19 @@
+:host {
+  position: relative;
+  flex: 1;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 .profile-page {
   background-color: #ffffff; // Fond blanc
-  height: 92dvh;             // Hauteur à 90% du viewport dynamique
+  height: 100%;   
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
+  position: absolute;
   overflow: hidden;
 }
 
