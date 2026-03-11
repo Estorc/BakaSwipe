@@ -39,12 +39,7 @@
     <div class="section-full-width">
       <div class="section"><h3>Themes</h3></div>
       <div class="theme-chips">
-        <span class="chip-ios">Action</span>
-        <span class="chip-ios">Shonen</span>
-        <span class="chip-ios">Mystère</span>
-        <span class="chip-ios">Psychologique</span>
-        <span class="chip-ios">Surnaturel</span>
-        <span class="chip-ios">Drame</span>
+      <div class="chip-ios" *ngFor="let tag of cards[currentIndex].tags">{{ tag }}</div>
       </div>
     </div>
 

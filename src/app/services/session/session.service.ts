@@ -100,6 +100,19 @@ export class SessionService {
     this.sessionId = data.sessionId;
     this.save();
   }
+  // <-- LA METHODE DISCONNECT EXISTE BIEN ICI
+  async disconnect(): Promise<void>{
+    try{
+          const res = await fetch(`${SERVER_IP}/delete-session`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId })
+      });
+    }
+    catch (e){
+        console.error(e);
+    }
+  }
 
   // <-- LA METHODE CONNECT EXISTE BIEN ICI
   async connect(): Promise<void> {
