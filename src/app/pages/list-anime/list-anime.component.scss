@@ -25,14 +25,18 @@
 
 .filter-chips {
   display: flex;
+  flex-wrap: nowrap;     
+  overflow-x: auto;      /* Force le scroll horizontal */
+  overflow-y: hidden;    /* Empêche tout mouvement vertical parasite */
   gap: 10px;
-  overflow-x: auto;
-  padding: 10px 0;
-  white-space: nowrap;
-  scrollbar-width: none;
-  &::-webkit-scrollbar { display: none; }
+  padding: 10px 5px;
+  width: 100%;           /* Doit occuper toute la largeur du parent */
+  -webkit-overflow-scrolling: touch;/* Scroll fluide sur iOS */
+  flex-shrink: 0;
 
   .chip {
+    flex: 0 0 auto;      /* EMPÊCHE les puces de rétrécir */
+    white-space: nowrap;
     cursor: pointer;
     background-color: #222;
     color: #888;
@@ -45,7 +49,6 @@
     &.active {
       background-color: #fff;
       color: #111;
-      font-weight: normal;
     }
   }
 }
@@ -74,11 +77,15 @@
 
 .anime-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* On définit 4 colonnes de taille égale */
+  grid-template-columns: repeat(4, 1fr); 
+  /* On empêche les éléments de s'étaler s'il y en a moins de 4 */
+  justify-content: start; 
+  align-content: start;
   gap: 8px;
-  overflow: scroll;
-  position: relative;
+  overflow-y: auto;     
   height: 100%;
+  padding-bottom: 100px;  
 }
 
 .anime-card {
