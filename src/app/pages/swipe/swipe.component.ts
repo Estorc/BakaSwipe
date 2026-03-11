@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink, Router } from '@angular/router';
 import { SessionService } from '../../services/session/session.service';
-import { FormsModule} from '@angular/forms'
+import { FormsModule } from '@angular/forms'
 
 interface Card {
   id: number;
@@ -45,6 +45,7 @@ export class SwipeComponent {
   }
 
   parsingCards(results: any[]): Card[] {
+    this.parsing = false;
     return results.map(item => {
 
       let card: Card = {
@@ -62,7 +63,7 @@ export class SwipeComponent {
   }
 
   constructor(private sessionService: SessionService) {
-    this.sessionService.suggest().then(results => {
+    this.sessionService.suggest(0).then(results => {
       this.cards = this.parsingCards(results);
     });
   }
@@ -105,12 +106,31 @@ export class SwipeComponent {
   showDescription = false;
   ratingValue = 8;
   selectedStatus: string = '';
+  parsing = false;
   x = 0;
   y = 0;
   rotation = 0;
   startX = 0;
   startY = 0;
-  
+
+
+  selectNext() {
+    this.currentIndex++;
+    if (this.currentIndex >= this.cards.length - 5 && this.parsing == false) {
+      this.parsing = true;
+      //this.currentIndex = 0;
+      console.log('Chargement de nouvelles cartes...');
+      this.sessionService.suggest(this.cards.length)
+        .then(results => {
+          this.cards = this.cards.concat(this.parsingCards(results));
+        })
+        .catch(error => {
+          console.error('Erreur lors du chargement des cartes :', error);
+          this.parsing = false;
+        });
+    }
+  }
+
   statusList = ['Watching', 'Completed', 'Plan to watch', 'On hold', 'Dropped'];
   selectStatus(status: string) {
     this.selectedStatus = status;
@@ -137,7 +157,7 @@ export class SwipeComponent {
 
     this.heroRef.nativeElement.releasePointerCapture(event.pointerId);
     //DETECTION SWIPE HAUT
-    if (this.y < -100 && Math.abs(this.x) < 80){
+    if (this.y < -100 && Math.abs(this.x) < 80) {
       this.showDescription = true;
     }
     //DETECTION SWIPE BAS
@@ -145,10 +165,7 @@ export class SwipeComponent {
       this.showDescription = false;
     }
     else if ((this.x > 150 || this.x < -150) && this.showDescription == false) {
-      this.currentIndex++;
-      if (this.currentIndex >= this.cards.length) {
-        this.currentIndex = 0;
-      }
+      this.selectNext();
     }
 
     this.x = 0;
@@ -158,17 +175,11 @@ export class SwipeComponent {
 
 
   cross() {
-      this.currentIndex++;
-      if (this.currentIndex >= this.cards.length) {
-        this.currentIndex = 0;
-      }
+    this.selectNext();
   }
 
   heart() {
-      this.currentIndex++;
-      if (this.currentIndex >= this.cards.length) {
-        this.currentIndex = 0;
-      }
+    this.selectNext();
   }
 
   onClick() {
