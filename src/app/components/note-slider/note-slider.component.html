@@ -1,0 +1,17 @@
+<div class="custom-slider">
+  <input type="range" min="1" max="10" step="1" [(ngModel)]="ratingValue" (input)="noteSlider()">
+
+  <div class="icone-indicator" [style.left.%]="(ratingValue - 1) * 11.11">
+    <mat-icon
+      [style.color]="
+        ratingValue >= 7 ? 'red' :
+        ratingValue >= 4 ? 'gold' :
+        'brown'
+      ">
+      {{ ratingValue >= 7 ? 'favorite' :
+         (ratingValue >= 4 ? 'star' : 'delete') }}
+    </mat-icon>
+
+    <span class="note-label">{{ ratingValue }}</span>
+  </div>
+</div>

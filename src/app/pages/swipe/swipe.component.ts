@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink, Router } from '@angular/router';
 import { SessionService } from '../../services/session/session.service';
 import { FormsModule } from '@angular/forms'
+import { NoteSliderComponent } from "../../components/note-slider/note-slider.component";
 
 interface Card {
   id: number;
@@ -26,9 +26,9 @@ interface Card {
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    RouterLink,
     FormsModule,
-  ],
+    NoteSliderComponent
+],
   templateUrl: './swipe.component.html',
   styleUrls: ['./swipe.component.scss'],
 })
@@ -104,7 +104,6 @@ export class SwipeComponent {
   dragging = false;
   currentIndex = 0;
   showDescription = false;
-  ratingValue = 8;
   selectedStatus: string = '';
   parsing = false;
   x = 0;

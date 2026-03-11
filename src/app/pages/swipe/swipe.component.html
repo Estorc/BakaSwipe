@@ -69,16 +69,8 @@
       </div>
     </div>
 
-    <div class="section rating-section">
-      <h3>Note</h3>
-      <div class="custom-slider">
-        <input type="range" min="1" max="10" step="1" [(ngModel)]="ratingValue">
-        <div class="heart-indicator" [style.left.%]="(ratingValue - 1) * 11.11">
-          <mat-icon>favorite</mat-icon>
-          <span class="note-label">{{ ratingValue }}</span>
-        </div>
-      </div>
-    </div>
+    <app-note-slider></app-note-slider>
+
   </div>
 </div>
   <div class="icon_container">
