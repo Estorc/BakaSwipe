@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { SessionService } from '../../services/session/session.service';
 
 @Component({
   selector: 'app-liste',
@@ -18,19 +19,19 @@ export class ListAnimeComponent {
     { title: 'One Piece', image: 'assets/img/anime4.jpg', status: 'Watching', themes: ['Aventure', 'Action'], score: 9.7, episodes: 1200 },
     { title: 'Dandadan', image: 'assets/img/anime5.webp', status: 'Plan to watch', themes: ['Surnaturel'], score: 9.1, episodes: 24 },
     { title: 'Konosuba', image: 'assets/img/anime6.webp', status: 'Plan to watch', themes: ['Isekai', 'Comedy'], score: 7.2, episodes: 13 },
-    { title: 'L\'attaque des Titans', image: 'assets/img/anime7.jpg', status: 'En pause', themes: ['Guerre', 'Drame'] , score: 9.1, episodes: 24},
-    { title: 'Your Name', image: 'assets/img/anime8.webp', status: 'On hold', themes: ['Film', 'Romance'] , score: 9.6, episodes: 1},
-    { title: 'Tokyo Ghoul', image: 'assets/img/anime1.jpg', status: 'On hold', themes: ['Action', 'Drame'] , score: 7.8, episodes: 12},
-    { title: 'Naruto Shippuden', image: 'assets/img/anime2.jpg', status: 'Dropped', themes: ['Shonen', 'Combat'] , score: 8.5, episodes: 200 },
-    { title: 'Zombieland Saga', image: 'assets/img/anime3.webp', status: 'Dropped', themes: ['Idol', 'Humour'],score: 7.5, episodes: 12  },
-    { title: 'One Piece', image: 'assets/img/anime4.jpg', status: 'Completed', themes: ['Aventure', 'Action'],score: 9.7, episodes: 1200 },
-    { title: 'Dandadan', image: 'assets/img/anime5.webp', status: 'Completed', themes: ['Surnaturel'], score: 9.1, episodes: 24  },
-    { title: 'Konosuba', image: 'assets/img/anime6.webp', status: 'Watching', themes: ['Isekai', 'Comedy'],score: 7.2, episodes: 13 },
-    { title: 'L\'attaque des Titans', image: 'assets/img/anime7.jpg', status: 'Completed', themes: ['Guerre', 'Drame'],score: 9.1, episodes: 24 },
+    { title: 'L\'attaque des Titans', image: 'assets/img/anime7.jpg', status: 'En pause', themes: ['Guerre', 'Drame'], score: 9.1, episodes: 24 },
+    { title: 'Your Name', image: 'assets/img/anime8.webp', status: 'On hold', themes: ['Film', 'Romance'], score: 9.6, episodes: 1 },
+    { title: 'Tokyo Ghoul', image: 'assets/img/anime1.jpg', status: 'On hold', themes: ['Action', 'Drame'], score: 7.8, episodes: 12 },
+    { title: 'Naruto Shippuden', image: 'assets/img/anime2.jpg', status: 'Dropped', themes: ['Shonen', 'Combat'], score: 8.5, episodes: 200 },
+    { title: 'Zombieland Saga', image: 'assets/img/anime3.webp', status: 'Dropped', themes: ['Idol', 'Humour'], score: 7.5, episodes: 12 },
+    { title: 'One Piece', image: 'assets/img/anime4.jpg', status: 'Completed', themes: ['Aventure', 'Action'], score: 9.7, episodes: 1200 },
+    { title: 'Dandadan', image: 'assets/img/anime5.webp', status: 'Completed', themes: ['Surnaturel'], score: 9.1, episodes: 24 },
+    { title: 'Konosuba', image: 'assets/img/anime6.webp', status: 'Watching', themes: ['Isekai', 'Comedy'], score: 7.2, episodes: 13 },
+    { title: 'L\'attaque des Titans', image: 'assets/img/anime7.jpg', status: 'Completed', themes: ['Guerre', 'Drame'], score: 9.1, episodes: 24 },
     { title: 'Your Name', image: 'assets/img/anime8.webp', status: 'Watching', themes: ['Film', 'Romance'], score: 9.6, episodes: 1 }
   ];
 
- // Listes pour les filtres
+  // Listes pour les filtres
   categories = ['All', 'Completed', 'Watching', 'Plan to watch', 'On hold', 'Dropped'];
   themesList = ['Tous les thèmes', 'Action', 'Aventure', 'Comédie', 'Drame', 'Romance', 'Surnaturel', 'Isekai', 'Shonen'];
 
@@ -42,7 +43,13 @@ export class ListAnimeComponent {
 
   filteredAnimes = [...this.animes];
 
-  constructor() {
+  constructor(private sessionService: SessionService) {
+    this.sessionService.isSessionValid().then(valid => {
+      if (!valid) {
+        // Rediriger vers la page de connexion
+        window.location.href = '/login';
+      }
+    });
     this.applyFilters();
   }
 
