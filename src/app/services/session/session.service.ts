@@ -166,14 +166,14 @@ export class SessionService {
   }
 
 
-  async suggest(): Promise<any> {
+  async suggest(offset: number): Promise<any> {
 
     if (!this.sessionId) {
       console.log('Session expirée. Veuillez vous reconnecter.');
       return null;
     }
 
-    const options = { limit: 10, offset: 0 };
+    const options = { limit: 10, offset: offset };
 
     try {
       const res = await fetch(`${SERVER_IP}/suggest`, {

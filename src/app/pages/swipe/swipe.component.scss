@@ -91,11 +91,22 @@
   font-size: 15px;
 }
 
+@mixin line-clamp($lines, $line-height) {
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    max-height: $lines * $line-height;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .desc {
   font-size: 14px;
   line-height: 1.4;
   color: #ddd;
   margin-bottom: 100px;
+  @include line-clamp(3, 1.4em);
 }
 
 
@@ -137,16 +148,16 @@
   &.is-open { transform: translateY(0); }
 
   .drag-handle {
-    width: 100%; 
-    height: 35px; 
-    display: flex; 
-    justify-content: center; 
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: center;
     padding-top: 10px;
-    &::after { 
-      content: ""; 
-      width: 40px; 
-      height: 5px; 
-      background: #e0e0e0; 
+    &::after {
+      content: "";
+      width: 40px;
+      height: 5px;
+      background: #e0e0e0;
       border-radius: 10px; }
   }
 
@@ -159,21 +170,21 @@
   }
 }
 
-.sheet-main-title { 
-  font-size: 32px; 
-  font-weight: 700; 
+.sheet-main-title {
+  font-size: 32px;
+  font-weight: 700;
   margin-bottom: 25px;
  }
 
 .section {
   margin-bottom: 25px;
-  h3 { 
-    font-size: 18px; 
+  h3 {
+    font-size: 18px;
     font-weight: 700;
     margin-bottom: 10px; }
-  .text-muted { 
-    font-size: 14px; 
-    color: #444; 
+  .text-muted {
+    font-size: 14px;
+    color: #444;
     line-height: 1.5; }
 }
 
@@ -185,8 +196,8 @@
     flex: 0 0 auto;
     background: #9fa8da;
     color: white;
-    padding: 8px 18px; 
-    border-radius: 25px; 
+    padding: 8px 18px;
+    border-radius: 25px;
     font-size: 14px;
     white-space: nowrap;
   }
@@ -194,79 +205,79 @@
 
 /* --- TRAILER PREVIEW --- */
 .trailer-preview {
-  position: relative; 
-  border-radius: 15px; 
-  overflow: hidden; 
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
   aspect-ratio: 16/9;
-  img { width: 100%; 
-    height: 100%; 
+  img { width: 100%;
+    height: 100%;
     object-fit: cover; }
   .play-overlay {
-    position: absolute; 
-    inset: 0; display: flex; 
-    align-items: center; 
+    position: absolute;
+    inset: 0; display: flex;
+    align-items: center;
     justify-content: center;
     background: rgba(0,0,0,0.2);
-    mat-icon { 
-      font-size: 50px; 
-      width: 50px; 
-      height: 50px; 
-      color: white; 
+    mat-icon {
+      font-size: 50px;
+      width: 50px;
+      height: 50px;
+      color: white;
       opacity: 0.9; }
   }
 }
 
 /* --- BOUTONS STATUT  --- */
 .status-container {
-  display: flex; 
+  display: flex;
   overflow-x: auto;
-  gap: 10px; 
+  gap: 10px;
   margin: 20px 0;
   .btn-status {
-    flex: 0 0 auto; 
-    background: #efefef; 
-    border: none; 
+    flex: 0 0 auto;
+    background: #efefef;
+    border: none;
     padding: 12px;
-    border-radius: 5px; 
-    font-size: 14px; 
-    font-weight: 500; 
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 500;
     color: #333;
     white-space: nowrap;
-    &:nth-child(3) { 
-      flex: 0 0 auto; } 
+    &:nth-child(3) {
+      flex: 0 0 auto; }
   }
 }
 
 /* --- RATING SLIDER --- */
 .custom-slider {
-  position: relative; 
+  position: relative;
   padding: 40px 0 10px;
   input[type=range] {
-    width: 100%; 
-    height: 12px; 
-    background: #efefef; 
+    width: 100%;
+    height: 12px;
+    background: #efefef;
     border-radius: 10px;
-    appearance: none; 
-    outline: none; 
+    appearance: none;
+    outline: none;
     accent-color: #ff2d55;
   }
   .heart-indicator {
-    position: absolute; 
-    top: 0; 
+    position: absolute;
+    top: 0;
     transform: translateX(-50%);
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: #ff2d55;
-    mat-icon { 
-      font-size: 38px; 
-      width: 38px; 
+    mat-icon {
+      font-size: 38px;
+      width: 38px;
       height: 38px; }
-    .note-label { 
-      position: absolute; 
-      top: 10px; 
-      color: white; 
-      font-size: 11px; 
+    .note-label {
+      position: absolute;
+      top: 10px;
+      color: white;
+      font-size: 11px;
       font-weight: bold; }
   }
 }
@@ -277,7 +288,7 @@
   left: 0;
   right: 0;
   // HAUTEUR CALCULÉE POUR NE PAS DÉPASSER
-  height: calc(100vh - 70px); 
+  height: calc(100vh - 70px);
   background: white;
   border-radius: 25px 25px 0 0;
   z-index: 999; // Un peu moins que la nav si tu veux que la nav reste reine
@@ -286,38 +297,38 @@
   color: #000;
   box-shadow: 0 -10px 40px rgba(0,0,0,0.3);
 
-  &.is-open { 
-    transform: translateY(0); 
+  &.is-open {
+    transform: translateY(0);
   }
   .drag-handle {
-    width: 100%; 
-    height: 35px; 
-    display: flex; 
-    justify-content: center; 
+    width: 100%;
+    height: 35px;
+    display: flex;
+    justify-content: center;
     padding-top: 10px;
     cursor: pointer;
-    &::after { 
-      content: ""; 
-      width: 40px; 
-      height: 5px; 
-      background: #e0e0e0; 
-      border-radius: 10px; 
+    &::after {
+      content: "";
+      width: 40px;
+      height: 5px;
+      background: #e0e0e0;
+      border-radius: 10px;
     }
   }
 
   .sheet-scroll-content {
     // Padding bottom important pour ne rien cacher derrière le bas de l'écran
-    padding: 0 0 150px 0; 
+    padding: 0 0 150px 0;
     height: calc(100% - 35px);
     overflow-y: auto;
-    scrollbar-width: none; 
+    scrollbar-width: none;
     &::-webkit-scrollbar { display: none; }
   }
 }
 
-.sheet-main-title { 
-  font-size: 32px; 
-  font-weight: 700; 
+.sheet-main-title {
+  font-size: 32px;
+  font-weight: 700;
   margin-bottom: 25px;
   padding: 0 20px;
 }
@@ -325,15 +336,15 @@
 .section {
   padding: 0 20px; // Padding interne pour aligner le texte
   margin-bottom: 25px;
-  h3 { 
-    font-size: 18px; 
+  h3 {
+    font-size: 18px;
     font-weight: 700;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
   }
-  .text-muted { 
-    font-size: 14px; 
-    color: #444; 
-    line-height: 1.5; 
+  .text-muted {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.5;
   }
 }
 
@@ -356,8 +367,8 @@
 .theme-chips .chip-ios {
   background: #9fa8da;
   color: white;
-  padding: 8px 18px; 
-  border-radius: 25px; 
+  padding: 8px 18px;
+  border-radius: 25px;
   font-size: 14px;
 }
 
@@ -383,7 +394,7 @@
   border-radius: 50%;
   border: 2px solid #ff6f56;
   position: relative;
-  
+
 }
 
 .heart {
@@ -392,7 +403,7 @@
   border-radius: 50%;
   border: 2px solid rgb(116, 255, 157);
   position: relative;
-  
+
 }
 
 .icon_container{
