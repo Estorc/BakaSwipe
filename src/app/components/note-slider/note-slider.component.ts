@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 
@@ -15,7 +15,10 @@ import { FormsModule } from '@angular/forms';
 export class NoteSliderComponent {
   ratingValue = 1;
 
+  @Output() ratingSelected = new EventEmitter<number>();
+
   noteSlider() {
     console.log(this.ratingValue);
+    this.ratingSelected.emit(this.ratingValue);
   }
 }

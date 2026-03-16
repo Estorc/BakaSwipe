@@ -7,6 +7,7 @@ import { SessionService } from '../../services/session/session.service';
 import { FormsModule } from '@angular/forms'
 import { NoteSliderComponent } from "../../components/note-slider/note-slider.component";
 
+
 interface Card {
   id: number;
   title: string;
@@ -106,6 +107,7 @@ export class SwipeComponent {
   rotation = 0;
   startX = 0;
   startY = 0;
+  showRating = false;
 
 
   selectNext() {
@@ -114,14 +116,15 @@ export class SwipeComponent {
       this.parsing = true;
       //this.currentIndex = 0;
       console.log('Chargement de nouvelles cartes...');
-      this.sessionService.suggest(this.cards.length)
+      setTimeout(()=>{this.sessionService.suggest(this.cards.length)
         .then(results => {
           this.cards = this.cards.concat(this.parsingCards(results));
         })
         .catch(error => {
           console.error('Erreur lors du chargement des cartes :', error);
           this.parsing = false;
-        });
+        });} ,1500);
+      
     }
   }
 
@@ -154,11 +157,14 @@ export class SwipeComponent {
     if (this.y < -100 && Math.abs(this.x) < 80) {
       this.showDescription = true;
     }
-    //DETECTION SWIPE BAS
-    else if (this.y > 100 && this.showDescription) {
-      this.showDescription = false;
+
+    // SWIPE DROITE
+    else if (this.x > 150 && this.showDescription == false) {
+      this.showRating = true;
     }
-    else if ((this.x > 150 || this.x < -150) && this.showDescription == false) {
+    
+    // SWIPE GAUCHE
+    else if (this.x < -150 && this.showDescription == false) {
       this.selectNext();
     }
 
@@ -167,13 +173,32 @@ export class SwipeComponent {
     this.rotation = 0;
   }
 
+  handleRating(rating: number) {
+    console.log("Note choisie :", rating); // 1..10
+    
+    this.sessionService.updateStatus(
+      this.cards[this.currentIndex].id,
+      {
+        status: "completed",
+        score: rating,
+      }
+    ).then(() => {
+
+      // fermer le slider
+      this.showRating = false;
+
+      // passer à la carte suivante
+      this.selectNext();
+
+    });
+  }
 
   cross() {
     this.selectNext();
   }
 
   heart() {
-    this.selectNext();
+    this.showRating = true;
   }
 
   onClick() {
