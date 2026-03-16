@@ -49,9 +49,9 @@
         <button 
           *ngFor="let status of statusList"
           class="btn-status"
-          [class.active]="selectedStatus === status"
+          [class.active]="selectedStatus === status.value"
           (click)="selectStatus(status)">
-          {{ status }}
+          {{ status.label }}
         </button>
       </div>
     </div>
@@ -64,7 +64,9 @@
       </div>
     </div>
 
-    <app-note-slider></app-note-slider>
+    <app-note-slider
+      (ratingSelected)="handleRatingUp($event)">
+    </app-note-slider>
 
   </div>
 </div>
@@ -79,7 +81,7 @@
 
   <div class="slider-middle">
   <app-note-slider
-    (ratingSelected)="handleRating($event)">
+    (ratingSelected)="handleRatingRight($event)">
   </app-note-slider>
   </div>
 </div>
