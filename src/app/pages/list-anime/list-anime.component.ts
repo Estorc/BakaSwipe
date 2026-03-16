@@ -36,7 +36,7 @@ export class ListAnimeComponent implements OnInit {
   filteredAnimes: any[] = [];
 
   // Listes pour les filtres
-  categories = ['All', 'completed', 'watching', 'plan to watch', 'on hold', 'dropped'];
+  categories = ['All', 'completed', 'watching', 'plan_to_watch', 'on_hold', 'dropped'];
   themesList: string[] = ['Tous les thèmes'];
   // États actuels
   selectedCategory = 'All';

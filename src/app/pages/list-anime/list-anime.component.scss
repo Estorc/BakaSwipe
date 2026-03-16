@@ -48,7 +48,7 @@
     user-select: none;
 
     &.active {
-      background-color: #fff;
+      background-color: #59ccd9;
       color: #111;
     }
   }
@@ -57,7 +57,7 @@
 .themes-bar .chip.theme {
   background-color: #1a1a1a;
   font-size: 11px;
-  &.active { background-color: #ff4081; color: white; }
+  &.active { background-color: #607ea6; color: white; }
 }
 
 .separator { border: 0; border-top: 1px solid #222; margin: 10px 0; }
