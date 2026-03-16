@@ -1,5 +1,5 @@
 <div class="custom-slider">
-  <input type="range" min="1" max="10" step="1" [(ngModel)]="ratingValue" (input)="noteSlider()">
+  <input type="range" min="1" max="10" step="1" [(ngModel)]="ratingValue" (change)="noteSlider()">
 
   <div class="icone-indicator" [style.left.%]="(ratingValue - 1) * 11.11">
     <mat-icon

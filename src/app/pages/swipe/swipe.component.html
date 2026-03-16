@@ -72,5 +72,14 @@
     <img src='assets/img/cross.png' class="cross" (click)="cross()"/> 
     <img src='assets/img/heart.png' class="heart" (click)="heart()"/> 
   </div>
-</div>
 
+<div *ngIf="showRating" class="rating-overlay">
+
+  <div class="overlay-bg"></div>
+
+  <div class="slider-middle">
+  <app-note-slider
+    (ratingSelected)="handleRating($event)">
+  </app-note-slider>
+  </div>
+</div>
