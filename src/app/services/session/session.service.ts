@@ -103,7 +103,7 @@ export class SessionService {
   // <-- LA METHODE DISCONNECT EXISTE BIEN ICI
   async disconnect(): Promise<void>{
     try{
-          const res = await fetch(`${SERVER_IP}/delete-session`, {
+        const res = await fetch(`${SERVER_IP}/delete-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId: this.sessionId })
@@ -203,6 +203,25 @@ export class SessionService {
 
     } catch (error) {
       console.error('Erreur lors de la recherche:', error);
+    }
+  }
+
+  async loadUserAnimeList(): Promise<any> {
+    if (!this.sessionId) {
+      console.log('Session expirée. Veuillez vous reconnecter.');
+      return null;
+    }
+    try {
+      const res = await fetch(`${SERVER_IP}/user-anime-list`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId })
+      });
+      const data = await res.json();
+      console.log(`Anime list loaded:`, data);
+      return data;
+    } catch (error) {
+      console.error('Erreur lors du chargement de la liste d’anime:', error);
     }
   }
 }
