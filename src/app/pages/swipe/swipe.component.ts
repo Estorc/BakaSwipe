@@ -204,6 +204,10 @@ export class SwipeComponent {
     this.rotation = 0;
   }
 
+  quitterRating() {
+    this.showRating = false;
+  }
+
   handleRatingRight(rating: number) {
     console.log("Note choisie :", rating); // 1..10
 
