@@ -98,9 +98,9 @@
     position: absolute; bottom: 0; left: 0; right: 0;
     background: linear-gradient(transparent, rgba(0,0,0,0.95));
     padding: 5px;
-    .anime-title { color: white; font-size: 9px; font-weight: bold; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .anime-info { display: flex; justify-content: space-between; font-size: 7px; color: #aaa; margin: 2px 0; }
-    .theme-tags { display: flex; flex-wrap: wrap; gap: 2px; .tag { font-size: 6px; background: rgba(255,255,255,0.1); padding: 1px 3px; border-radius: 2px; color: #ccc; } }
+    .anime-title { color: white; font-size: 18px; font-weight: bold; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .anime-info { display: flex; justify-content: space-between; font-size: 12px; color: #ffff; margin: 2px 0; }
+    .theme-tags { display: flex; flex-wrap: wrap; gap: 2px; .tag { font-size: 10px; background: rgba(255,255,255,0.1); padding: 1px 3px; border-radius: 2px; color: #ccc; } }
   }
 }
 
