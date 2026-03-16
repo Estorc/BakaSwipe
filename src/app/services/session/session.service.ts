@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 const SERVER_IP = "https://bakaswipe.pluscorp.fr";
 export interface PostData {
-  status?: string;
+  status?: "watching" | "completed" | "on_hold" | "dropped" | "plan_to_watch";
   score?: number;
   num_watched_episodes?: number;
   is_rewatching?: boolean;
