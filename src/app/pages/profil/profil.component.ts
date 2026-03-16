@@ -22,11 +22,11 @@ export class ProfilComponent implements OnInit {
   constructor(
     private session: SessionService,
     private router: Router
-  ){}
+  ) { }
   async ngOnInit() {
     // 1. On vérifie si la session est toujours valide
     const valid = await this.session.isSessionValid();
-    
+
     if (!valid) {
       this.router.navigate(['/login']);
       return;
@@ -34,17 +34,35 @@ export class ProfilComponent implements OnInit {
 
     // 2. On récupère les infos de l'utilisateur stockées dans le service
     // Supposons que ton service stocke l'utilisateur après login/check
-    const user = await this.session.getUserInfo(); // Ajuste selon le nom de ta méthode
+    this.getUserInfo()// Ajuste selon le nom de ta méthode
 
-      this.pseudo = user.details.name || "Utilisateur";
-      this.profileImageUrl = user.details.picture || this.profileImageUrl;
-    //affiche les infos de l'utilisateur
-    console.log(`User info:`, user);
   }
 
   async onDisconnectClick() {
     await this.session.disconnect();
     window.location.href = '/login';
 
+  }
+
+  getUserInfo() {
+    this.session.getUserInfo()
+      .then(user => {
+        if (!user) {
+          setTimeout(() => {
+            this.getUserInfo();
+          }, 500); // Réessayer après 500 ms
+          return;
+        }
+        this.pseudo = user.details.name || "Utilisateur";
+        this.profileImageUrl = user.details.picture || this.profileImageUrl;
+        //affiche les infos de l'utilisateur
+        console.log(`User info:`, user);
+      })
+      .catch(error => {
+        setTimeout(() => {
+          this.getUserInfo();
+        }, 500); // Réessayer après 500 ms
+        console.error('Erreur lors de la récupération des informations utilisateur:', error);
+      });
   }
 }

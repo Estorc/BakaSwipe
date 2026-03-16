@@ -44,68 +44,83 @@ export class ListAnimeComponent implements OnInit {
   sortType: 'alpha' | 'score' | 'episodes' = 'alpha';
   sortOrder: 'asc' | 'desc' = 'asc';
 
-  constructor(private sessionService: SessionService) {}
+  constructor(private sessionService: SessionService) { }
 
-async ngOnInit() {
-  const valid = await this.sessionService.isSessionValid();
-  if (!valid) {
-    window.location.href = '/login';
-    return;
-  }
-
-  try {
-    const response = await this.sessionService.loadUserAnimeList();
-    // On cherche le tableau d'animes (soit dans response.data, soit response lui-même)
-    const rawList = response?.details?.data || (Array.isArray(response) ? response : null);
-
-    if (rawList) {
-      this.animes = rawList.map((item: any) => {
-        const genres = item.node?.genres?.map((g: any) => g.name) || [];
-      return {  
-        title: item.node?.title || 'Sans titre',
-        image: item.node?.main_picture?.large || item.node?.main_picture?.medium || '',
-        status: item.node?.my_list_status?.status || 'watching',
-        score: item.node?.my_list_status?.score || 0,
-        episodes: item.node?.num_episodes || 0,
-        themes: genres // MAL ne renvoie pas les thèmes ici
-      };
-      });
-      this.generateThemesList();      
-      // On initialise filteredAnimes avant d'appliquer les filtres pour éviter une liste vide
-      this.filteredAnimes = [...this.animes];
-      this.applyFilters();
-    } else {
-      console.error('Aucune donnée trouvée dans la réponse:', response);
+  async ngOnInit() {
+    const valid = await this.sessionService.isSessionValid();
+    if (!valid) {
+      window.location.href = '/login';
+      return;
     }
-  } catch (error) {
-    console.error('Erreur fatale lors de l\'initialisation:', error);
+
+    this.loadUserAnimeList();
   }
-}
 
-generateThemesList() {
-  // 1. On compte les occurrences de chaque thème
-  const counts: { [key: string]: number } = {};
-  
-  this.animes.forEach(anime => {
-    anime.themes.forEach((theme: string) => {
-      counts[theme] = (counts[theme] || 0) + 1;
+  loadUserAnimeList() {
+    this.sessionService.loadUserAnimeList()
+      .then(response => {
+        if (!response) {
+          setTimeout(() => {
+            this.loadUserAnimeList();
+          }, 500)
+          return;
+        }
+        // On cherche le tableau d'animes (soit dans response.data, soit response lui-même)
+        const rawList = response?.details?.data || (Array.isArray(response) ? response : null);
+
+        if (rawList) {
+          this.animes = rawList.map((item: any) => {
+            const genres = item.node?.genres?.map((g: any) => g.name) || [];
+            return {
+              title: item.node?.title || 'Sans titre',
+              image: item.node?.main_picture?.large || item.node?.main_picture?.medium || '',
+              status: item.node?.my_list_status?.status || 'watching',
+              score: item.node?.my_list_status?.score || 0,
+              episodes: item.node?.num_episodes || 0,
+              themes: genres // MAL ne renvoie pas les thèmes ici
+            };
+          });
+          this.generateThemesList();
+          // On initialise filteredAnimes avant d'appliquer les filtres pour éviter une liste vide
+          this.filteredAnimes = [...this.animes];
+          this.applyFilters();
+        } else {
+          console.error('Aucune donnée trouvée dans la réponse:', response);
+        }
+      })
+      .catch(error => {
+        setTimeout(() => {
+          this.loadUserAnimeList();
+        }, 500)
+        console.error('Erreur lors du chargement de la liste d\'animes :', error);
+      });
+
+  }
+
+  generateThemesList() {
+    // 1. On compte les occurrences de chaque thème
+    const counts: { [key: string]: number } = {};
+
+    this.animes.forEach(anime => {
+      anime.themes.forEach((theme: string) => {
+        counts[theme] = (counts[theme] || 0) + 1;
+      });
     });
-  });
 
-  // 2. On transforme l'objet en un tableau de noms de thèmes
-  const sortedThemes = Object.keys(counts).sort((a, b) => {
-    // On trie par nombre d'apparitions (du plus grand au plus petit)
-    const diff = counts[b] - counts[a];
-    
-    // Si deux thèmes ont le même nombre, on trie par ordre alphabétique
-    return diff !== 0 ? diff : a.localeCompare(b);
-  });
+    // 2. On transforme l'objet en un tableau de noms de thèmes
+    const sortedThemes = Object.keys(counts).sort((a, b) => {
+      // On trie par nombre d'apparitions (du plus grand au plus petit)
+      const diff = counts[b] - counts[a];
 
-  // 3. On met à jour la liste avec "Tous les thèmes" en premier
-  this.themesList = ['Tous les thèmes', ...sortedThemes];
-  
-  console.log('Thèmes triés par popularité :', counts);
-}
+      // Si deux thèmes ont le même nombre, on trie par ordre alphabétique
+      return diff !== 0 ? diff : a.localeCompare(b);
+    });
+
+    // 3. On met à jour la liste avec "Tous les thèmes" en premier
+    this.themesList = ['Tous les thèmes', ...sortedThemes];
+
+    console.log('Thèmes triés par popularité :', counts);
+  }
 
 
   // Gère le filtrage Statut + Thème
