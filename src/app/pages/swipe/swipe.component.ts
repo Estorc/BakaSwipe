@@ -34,13 +34,15 @@ interface Card {
 })
 export class SwipeComponent {
 
-  parsingDetails(card: Card): void {
-    this.sessionService.getAnimeDetails(card.id).then(value => {
-      console.log(value);
-      card.tags = value.details.genres.map((genre: any) => genre.name).slice(0, 3);
-      card.episodes = value.details.num_episodes ? `${value.details.num_episodes} épisodes` : "";
-      card.rating = `⭐ ${value.details.mean}`;
-      card.desc = `${value.details.synopsis}`;
+  constructor(private sessionService: SessionService) {
+    this.sessionService.isSessionValid().then(valid => {
+      if (!valid) {
+        // Rediriger vers la page de connexion
+        window.location.href = '/login';
+      }
+    });
+    this.sessionService.suggest(0).then(results => {
+      this.cards = this.parsingCards(results);
     });
   }
 
@@ -51,20 +53,13 @@ export class SwipeComponent {
       let card: Card = {
         id: item.node.id,
         title: item.node.title,
-        tags: [],
-        episodes: ``,
-        rating: ``,
-        desc: "",
+        tags: item.node.genres.map((genre: any) => genre.name).slice(0, 3),
+        episodes: item.node.num_episodes ? `${item.node.num_episodes} épisodes` : "",
+        rating: `⭐ ${item.node.mean}`,
+        desc: `${item.node.synopsis}`,
         image: item.node.main_picture.large
       }
-      this.parsingDetails(card);
       return card;
-    });
-  }
-
-  constructor(private sessionService: SessionService) {
-    this.sessionService.suggest(0).then(results => {
-      this.cards = this.parsingCards(results);
     });
   }
 
