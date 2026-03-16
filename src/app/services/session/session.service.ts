@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 
 const SERVER_IP = "https://bakaswipe.pluscorp.fr";
+export interface PostData {
+  status?: "watching" | "completed" | "on_hold" | "dropped" | "plan_to_watch";
+  score?: number;
+  num_watched_episodes?: number;
+  is_rewatching?: boolean;
+  updated_at?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -101,16 +108,16 @@ export class SessionService {
     this.save();
   }
   // <-- LA METHODE DISCONNECT EXISTE BIEN ICI
-  async disconnect(): Promise<void>{
-    try{
-        const res = await fetch(`${SERVER_IP}/delete-session`, {
+  async disconnect(): Promise<void> {
+    try {
+      const res = await fetch(`${SERVER_IP}/delete-session`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId: this.sessionId })
       });
     }
-    catch (e){
-        console.error(e);
+    catch (e) {
+      console.error(e);
     }
   }
 
@@ -207,10 +214,6 @@ export class SessionService {
   }
 
   async loadUserAnimeList(): Promise<any> {
-    if (!this.sessionId) {
-      console.log('Session expirée. Veuillez vous reconnecter.');
-      return null;
-    }
     try {
       const res = await fetch(`${SERVER_IP}/user-anime-list`, {
         method: 'POST',
@@ -222,6 +225,53 @@ export class SessionService {
       return data;
     } catch (error) {
       console.error('Erreur lors du chargement de la liste d’anime:', error);
+    }
+  }
+
+  async getUserInfo(): Promise<any> {
+    if (!this.sessionId) {
+      console.log('Session expirée. Veuillez vous reconnecter.');
+      return null;
+    }
+    try {
+      const res = await fetch(`${SERVER_IP}/user-info`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId })
+      });
+
+      const data = await res.json();
+
+      console.log(`User info :`, data);
+
+      return data;
+
+    } catch (error) {
+      console.error('Erreur lors de la récupération des informations utilisateur:', error);
+    }
+  }
+
+  async updateStatus(malId: number, data: PostData): Promise<void> {
+    if (!this.sessionId) {
+      console.log('Session expirée. Veuillez vous reconnecter.');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${SERVER_IP}/update-anime-status`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId, animeId: malId, postData: data })
+      });
+
+      if (res.status === 200) {
+        console.log(`Statut mis à jour pour l'anime ${malId} : ${status}`);
+      } else {
+        console.error(`Erreur lors de la mise à jour du statut pour l'anime ${malId}`);
+      }
+
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du statut:', error);
     }
   }
 }
