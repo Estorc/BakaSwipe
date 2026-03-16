@@ -18,7 +18,7 @@ export class SessionService {
   }
 
   async load() {
-    const saved = sessionStorage.getItem('sessionId');
+    const saved = localStorage.getItem('sessionId');
     console.log(`Start logging.`)
     if (saved) {
       this.sessionId = JSON.parse(saved);
@@ -35,7 +35,7 @@ export class SessionService {
   }
 
   save() {
-    sessionStorage.setItem('sessionId', JSON.stringify(this.sessionId));
+    localStorage.setItem('sessionId', JSON.stringify(this.sessionId));
   }
 
   isConnected(): boolean {
