@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { SessionService } from '../../services/session/session.service';
+
 
 @Component({
   selector: 'app-liste',
@@ -11,8 +12,8 @@ import { SessionService } from '../../services/session/session.service';
   templateUrl: './list-anime.component.html',
   styleUrls: ['./list-anime.component.scss']
 })
-export class ListAnimeComponent {
-  animes = [
+export class ListAnimeComponent implements OnInit {
+  /* animes = [
     { title: 'Tokyo Ghoul', image: 'assets/img/anime1.jpg', status: 'Watching', themes: ['Action', 'Drame'], score: 7.8, episodes: 12 },
     { title: 'Naruto Shippuden', image: 'assets/img/anime2.jpg', status: 'Watching', themes: ['Shonen', 'Combat'], score: 8.5, episodes: 200 },
     { title: 'Zombieland Saga', image: 'assets/img/anime3.webp', status: 'Watching', themes: ['Idol', 'Humour'], score: 7.5, episodes: 12 },
@@ -29,29 +30,83 @@ export class ListAnimeComponent {
     { title: 'Konosuba', image: 'assets/img/anime6.webp', status: 'Watching', themes: ['Isekai', 'Comedy'], score: 7.2, episodes: 13 },
     { title: 'L\'attaque des Titans', image: 'assets/img/anime7.jpg', status: 'Completed', themes: ['Guerre', 'Drame'], score: 9.1, episodes: 24 },
     { title: 'Your Name', image: 'assets/img/anime8.webp', status: 'Watching', themes: ['Film', 'Romance'], score: 9.6, episodes: 1 }
-  ];
+  ]; */
+
+  animes: any[] = [];
+  filteredAnimes: any[] = [];
 
   // Listes pour les filtres
-  categories = ['All', 'Completed', 'Watching', 'Plan to watch', 'On hold', 'Dropped'];
-  themesList = ['Tous les thèmes', 'Action', 'Aventure', 'Comédie', 'Drame', 'Romance', 'Surnaturel', 'Isekai', 'Shonen'];
-
+  categories = ['All', 'completed', 'watching', 'plan to watch', 'on hold', 'dropped'];
+  themesList: string[] = ['Tous les thèmes'];
   // États actuels
   selectedCategory = 'All';
   selectedTheme = 'Tous les thèmes';
   sortType: 'alpha' | 'score' | 'episodes' = 'alpha';
   sortOrder: 'asc' | 'desc' = 'asc';
 
-  filteredAnimes = [...this.animes];
+  constructor(private sessionService: SessionService) {}
 
-  constructor(private sessionService: SessionService) {
-    this.sessionService.isSessionValid().then(valid => {
-      if (!valid) {
-        // Rediriger vers la page de connexion
-        window.location.href = '/login';
-      }
-    });
-    this.applyFilters();
+async ngOnInit() {
+  const valid = await this.sessionService.isSessionValid();
+  if (!valid) {
+    window.location.href = '/login';
+    return;
   }
+
+  try {
+    const response = await this.sessionService.loadUserAnimeList();
+    // On cherche le tableau d'animes (soit dans response.data, soit response lui-même)
+    const rawList = response?.details?.data || (Array.isArray(response) ? response : null);
+
+    if (rawList) {
+      this.animes = rawList.map((item: any) => {
+        const genres = item.node?.genres?.map((g: any) => g.name) || [];
+      return {  
+        title: item.node?.title || 'Sans titre',
+        image: item.node?.main_picture?.large || item.node?.main_picture?.medium || '',
+        status: item.node?.my_list_status?.status || 'watching',
+        score: item.node?.my_list_status?.score || 0,
+        episodes: item.node?.num_episodes || 0,
+        themes: genres // MAL ne renvoie pas les thèmes ici
+      };
+      });
+      this.generateThemesList();      
+      // On initialise filteredAnimes avant d'appliquer les filtres pour éviter une liste vide
+      this.filteredAnimes = [...this.animes];
+      this.applyFilters();
+    } else {
+      console.error('Aucune donnée trouvée dans la réponse:', response);
+    }
+  } catch (error) {
+    console.error('Erreur fatale lors de l\'initialisation:', error);
+  }
+}
+
+generateThemesList() {
+  // 1. On compte les occurrences de chaque thème
+  const counts: { [key: string]: number } = {};
+  
+  this.animes.forEach(anime => {
+    anime.themes.forEach((theme: string) => {
+      counts[theme] = (counts[theme] || 0) + 1;
+    });
+  });
+
+  // 2. On transforme l'objet en un tableau de noms de thèmes
+  const sortedThemes = Object.keys(counts).sort((a, b) => {
+    // On trie par nombre d'apparitions (du plus grand au plus petit)
+    const diff = counts[b] - counts[a];
+    
+    // Si deux thèmes ont le même nombre, on trie par ordre alphabétique
+    return diff !== 0 ? diff : a.localeCompare(b);
+  });
+
+  // 3. On met à jour la liste avec "Tous les thèmes" en premier
+  this.themesList = ['Tous les thèmes', ...sortedThemes];
+  
+  console.log('Thèmes triés par popularité :', counts);
+}
+
 
   // Gère le filtrage Statut + Thème
   applyFilters() {

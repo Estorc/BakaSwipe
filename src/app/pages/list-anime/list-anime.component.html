@@ -2,14 +2,16 @@
 
   <div class="filter-chips">
     <div class="chip" *ngFor="let cat of categories"
-         (click)="filterByCategory(cat)" [class.active]="selectedCategory === cat">
-      {{ cat }}
+         (click)="filterByCategory(cat)" 
+         [class.active]="selectedCategory === cat">
+      {{ cat === 'All' ? 'All' : (cat.replace('_', ' ') | titlecase) }}
     </div>
   </div>
 
   <div class="filter-chips themes-bar">
     <div class="chip theme" *ngFor="let t of themesList"
-         (click)="filterByTheme(t)" [class.active]="selectedTheme === t">
+        (click)="filterByTheme(t)" 
+        [class.active]="selectedTheme === t">
       {{ t }}
     </div>
   </div>
@@ -31,14 +33,16 @@
 
   <div class="anime-grid" *ngIf="filteredAnimes.length > 0">
     <div class="anime-card" *ngFor="let anime of filteredAnimes">
-      <img [src]="anime.image" [alt]="anime.title">
+      <img [src]="anime.image || 'assets/img/placeholder.jpg'" [alt]="anime.title">
+      
       <div class="anime-overlay">
         <span class="anime-title">{{ anime.title }}</span>
         <div class="anime-info">
-          <span>⭐ {{ anime.score }}</span>
+          <span>⭐ {{ anime.score > 0 ? anime.score : 'N/A' }}</span>
           <span>{{ anime.episodes }} eps</span>
         </div>
-        <div class="theme-tags">
+        
+        <div class="theme-tags" *ngIf="anime.themes && anime.themes.length > 0">
           <span class="tag" *ngFor="let theme of anime.themes">{{ theme }}</span>
         </div>
       </div>
@@ -47,8 +51,7 @@
 
   <div class="no-results" *ngIf="filteredAnimes.length === 0">
     <mat-icon>search_off</mat-icon>
-    <p>No anime found</p>
+    <p>Aucun anime trouvé dans cette catégorie</p>
   </div>
 
 </div>
-

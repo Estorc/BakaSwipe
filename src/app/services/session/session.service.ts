@@ -213,12 +213,26 @@ export class SessionService {
     }
   }
 
+  async loadUserAnimeList(): Promise<any> {
+    try {
+      const res = await fetch(`${SERVER_IP}/user-anime-list`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId })
+      });
+      const data = await res.json();
+      console.log(`Anime list loaded:`, data);
+      return data;
+    } catch (error) {
+      console.error('Erreur lors du chargement de la liste d’anime:', error);
+    }
+  }
+
   async getUserInfo(): Promise<any> {
     if (!this.sessionId) {
       console.log('Session expirée. Veuillez vous reconnecter.');
       return null;
     }
-
     try {
       const res = await fetch(`${SERVER_IP}/user-info`, {
         method: 'POST',
