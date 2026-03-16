@@ -106,7 +106,7 @@ export class SwipeComponent {
   dragging = false;
   currentIndex = 0;
   showDescription = false;
-  selectedStatus: string = '';
+  selectedStatus?: "watching" | "completed" | "plan_to_watch" | "on_hold" | "dropped" = "plan_to_watch";
   parsing = false;
   x = 0;
   y = 0;
@@ -134,13 +134,22 @@ export class SwipeComponent {
       }, 1500);
 
     }
+    this.showDescription = false;
+    this.selectedStatus = 'plan_to_watch';
+  }
+  statusList = [
+    { label: 'Watching', value: 'watching' },
+    { label: 'Completed', value: 'completed' },
+    { label: 'Plan to watch', value: 'plan_to_watch' },
+    { label: 'On hold', value: 'on_hold' },
+    { label: 'Dropped', value: 'dropped' }
+  ] as const;
+
+  selectStatus(status: typeof this.statusList[number]) {
+    this.selectedStatus = status.value;
+    console.log('Statut sélectionné :', this.selectedStatus);
   }
 
-  statusList = ['Watching', 'Completed', 'Plan to watch', 'On hold', 'Dropped'];
-  selectStatus(status: string) {
-    this.selectedStatus = status;
-    console.log('Statut sélectionné :', status);
-  }
   startDrag(event: PointerEvent) {
     if (this.showDescription) return;
     this.dragging = true;
@@ -183,7 +192,7 @@ export class SwipeComponent {
     this.rotation = 0;
   }
 
-  handleRating(rating: number) {
+  handleRatingRight(rating: number) {
     console.log("Note choisie :", rating); // 1..10
 
     this.sessionService.updateStatus(
@@ -194,10 +203,26 @@ export class SwipeComponent {
       }
     ).then(() => {
 
-      // fermer le slider
       this.showRating = false;
 
-      // passer à la carte suivante
+      this.selectNext();
+
+    });
+  }
+
+  handleRatingUp(rating: number) {
+    console.log("Note choisie :", rating); // 1..10
+    
+    this.sessionService.updateStatus(
+      this.cards[this.currentIndex].id,
+      {
+        status: this.selectedStatus,
+        score: rating,
+      }
+    ).then(() => {
+
+      this.showRating = false;
+
       this.selectNext();
 
     });
