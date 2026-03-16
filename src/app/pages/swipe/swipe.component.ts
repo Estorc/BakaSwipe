@@ -29,7 +29,7 @@ interface Card {
     MatButtonModule,
     FormsModule,
     NoteSliderComponent
-],
+  ],
   templateUrl: './swipe.component.html',
   styleUrls: ['./swipe.component.scss'],
 })
@@ -42,8 +42,11 @@ export class SwipeComponent {
         window.location.href = '/login';
       }
     });
-    this.sessionService.suggest(0).then(results => {
-      this.cards = this.parsingCards(results);
+    this.sessionService.getOffset().then(offset => {
+      this.offset = offset;
+      this.sessionService.suggest(this.offset).then(results => {
+        this.cards = this.parsingCards(results);
+      });
     });
   }
 
@@ -66,35 +69,38 @@ export class SwipeComponent {
 
   @ViewChild('hero') heroRef!: ElementRef<HTMLElement>;
 
-  cards: Card[] = [
-    {
-      id: 0,
-      title: 'L\'API à crash',
-      tags: ['Victor est magnifique'],
-      episodes: '67 épisodes',
-      rating: '⭐ 6.9',
-      desc: 'Skibidi skibidi hawk tuah hawk',
-      image: 'https://cdn.pixabay.com/photo/2019/03/31/20/39/foal-4093986_1280.jpg'
-    },
-    {
-      id: 0,
-      title: 'L\'API à crash',
-      tags: ['Allez stream deadline'],
-      episodes: 'Cébastien épisodes',
-      rating: '⭐ 8.4',
-      desc: '4 goats qui chantent',
-      image: 'https://www.rollingstone.fr/wp-content/uploads/2026/03/blackpink-deadline-review.jpg'
-    },
-    {
-      id: 0,
-      title: 'L\'API à crash',
-      tags: ['Mario 64'],
-      episodes: '∞ épisodes',
-      rating: '⭐ 999999',
-      desc: 'Kaze Emmanuar, le Dieu unique de ce monde oblitère l\'humanité',
-      image: 'https://i.ytimg.com/vi/QbuoUH7TnvM/sddefault.jpg'
-    }
-  ];
+  offset: number = 0;
+  skipped: number = 0;
+  cards: Card[] = [];
+  // [
+  //   {
+  //     id: 0,
+  //     title: 'L\'API à crash',
+  //     tags: ['Victor est magnifique'],
+  //     episodes: '67 épisodes',
+  //     rating: '⭐ 6.9',
+  //     desc: 'Skibidi skibidi hawk tuah hawk',
+  //     image: 'https://cdn.pixabay.com/photo/2019/03/31/20/39/foal-4093986_1280.jpg'
+  //   },
+  //   {
+  //     id: 0,
+  //     title: 'L\'API à crash',
+  //     tags: ['Allez stream deadline'],
+  //     episodes: 'Cébastien épisodes',
+  //     rating: '⭐ 8.4',
+  //     desc: '4 goats qui chantent',
+  //     image: 'https://www.rollingstone.fr/wp-content/uploads/2026/03/blackpink-deadline-review.jpg'
+  //   },
+  //   {
+  //     id: 0,
+  //     title: 'L\'API à crash',
+  //     tags: ['Mario 64'],
+  //     episodes: '∞ épisodes',
+  //     rating: '⭐ 999999',
+  //     desc: 'Kaze Emmanuar, le Dieu unique de ce monde oblitère l\'humanité',
+  //     image: 'https://i.ytimg.com/vi/QbuoUH7TnvM/sddefault.jpg'
+  //   }
+  // ];
 
   animating = false;
   dragging = false;
@@ -116,15 +122,17 @@ export class SwipeComponent {
       this.parsing = true;
       //this.currentIndex = 0;
       console.log('Chargement de nouvelles cartes...');
-      setTimeout(()=>{this.sessionService.suggest(this.cards.length)
-        .then(results => {
-          this.cards = this.cards.concat(this.parsingCards(results));
-        })
-        .catch(error => {
-          console.error('Erreur lors du chargement des cartes :', error);
-          this.parsing = false;
-        });} ,1500);
-      
+      setTimeout(() => {
+        this.sessionService.suggest(this.offset + this.cards.length)
+          .then(results => {
+            this.cards = this.cards.concat(this.parsingCards(results));
+          })
+          .catch(error => {
+            console.error('Erreur lors du chargement des cartes :', error);
+            this.parsing = false;
+          });
+      }, 1500);
+
     }
   }
 
@@ -162,9 +170,11 @@ export class SwipeComponent {
     else if (this.x > 150 && this.showDescription == false) {
       this.showRating = true;
     }
-    
+
     // SWIPE GAUCHE
     else if (this.x < -150 && this.showDescription == false) {
+      this.skipped++;
+      this.sessionService.updateOffset(this.skipped + this.offset);
       this.selectNext();
     }
 
@@ -175,7 +185,7 @@ export class SwipeComponent {
 
   handleRating(rating: number) {
     console.log("Note choisie :", rating); // 1..10
-    
+
     this.sessionService.updateStatus(
       this.cards[this.currentIndex].id,
       {

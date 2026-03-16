@@ -274,4 +274,53 @@ export class SessionService {
       console.error('Erreur lors de la mise à jour du statut:', error);
     }
   }
+
+  async getOffset(): Promise<number> {
+    if (!this.sessionId) {
+      console.log('Session expirée. Veuillez vous reconnecter.');
+      return 0;
+    }
+
+    try {
+      const res = await fetch(`${SERVER_IP}/get-offset`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId })
+      });
+
+      const data = await res.json();
+
+      console.log(`Offset actuel :`, data.offset);
+
+      return data.offset;
+
+    } catch (error) {
+      console.error('Erreur lors de la récupération de l\'offset:', error);
+      return 0;
+    }
+  }
+
+  async updateOffset(newOffset: number): Promise<void> {
+    if (!this.sessionId) {
+      console.log('Session expirée. Veuillez vous reconnecter.');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${SERVER_IP}/update-offset`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sessionId: this.sessionId, offset: newOffset })
+      });
+
+      if (res.status === 200) {
+        console.log(`Offset mis à jour : ${newOffset}`);
+      } else {
+        console.error(`Erreur lors de la mise à jour de l'offset`);
+      }
+
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour de l\'offset:', error);
+    }
+  }
 }
