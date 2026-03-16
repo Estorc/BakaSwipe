@@ -332,7 +332,7 @@
 }
 
 .theme-chips .chip-ios {
-  background: #9fa8da;
+  background: #607ea6;
   color: white;
   padding: 8px 18px;
   border-radius: 25px;
@@ -344,13 +344,11 @@
     // Style normal
     background: #efefef;
     color: #333;
-    transition: all 0.2s ease;
 
     // Style quand on clique dessus
     &.active {
-      background: #8162e7; // Rose/Rouge comme ton bouton "Themes"
+      background: #3f528C; // Rose/Rouge comme ton bouton "Themes"
       color: white;
-      transform: scale(1.05); // Petit effet de zoom
     }
   }
 }
