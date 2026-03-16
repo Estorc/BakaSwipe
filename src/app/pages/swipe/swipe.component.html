@@ -79,6 +79,14 @@
 
   <div class="overlay-bg"></div>
 
+  <button 
+    mat-icon-button
+    class="quit-rating-btn"
+    (click)="quitterRating()">
+    <mat-icon>close</mat-icon>
+  </button>
+
+
   <div class="slider-middle">
   <app-note-slider
     (ratingSelected)="handleRatingRight($event)">
