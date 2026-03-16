@@ -132,14 +132,14 @@
 }
 /* --- VOLET DESCRIPTION --- */
 .description-sheet {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   height: 100vh;
   background: white;
   border-radius: 25px 25px 0 0;
-  z-index: 1000;
+  //z-index: 1000;
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   color: #000;
@@ -250,15 +250,14 @@
 
 /* --- VOLET DESCRIPTION --- */
 .description-sheet {
-  position: fixed;
-  bottom: 70px; // POSITIONNÉ JUSTE AU-DESSUS DE LA TAB-BAR (70px = hauteur .nav)
+  position: absolute; // POSITIONNÉ JUSTE AU-DESSUS DE LA TAB-BAR (70px = hauteur .nav)
   left: 0;
   right: 0;
   // HAUTEUR CALCULÉE POUR NE PAS DÉPASSER
   height: calc(100vh - 70px);
   background: white;
   border-radius: 25px 25px 0 0;
-  z-index: 999; // Un peu moins que la nav si tu veux que la nav reste reine
+  //z-index: 999; // Un peu moins que la nav si tu veux que la nav reste reine
   transform: translateY(110%); // On le cache un peu plus bas pour être sûr
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   color: #000;

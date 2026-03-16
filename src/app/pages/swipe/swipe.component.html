@@ -1,4 +1,11 @@
-<div class="container">
+<div class="container"
+
+      (pointerdown)="startDrag($event)"
+      (pointermove)="onDrag($event)"
+      (pointerup)="endDrag($event)"
+      (pointercancel)="endDrag($event)"
+      (click)="onClick()"
+>
   <div *ngIf="cards[currentIndex]" class="stack">
     <!-- seule la carte du dessus est interactive -->
     <div
@@ -7,11 +14,6 @@
       [style.--bg]="'url(' + cards[currentIndex].image + ')'"
       [class.dragging]="dragging"
       [class.animating]="animating"
-      (pointerdown)="startDrag($event)"
-      (pointermove)="onDrag($event)"
-      (pointerup)="endDrag($event)"
-      (pointercancel)="endDrag($event)"
-      (click)="onClick()"
       [style.transform]="'translate(' + x + 'px, ' + y + 'px) rotate(' + rotation + 'deg)'"
     >
       <div class="title">{{ cards[currentIndex].title }}</div>
@@ -46,7 +48,7 @@
     <div class="section-full-width">
       <div class="section"><h3>Status</h3></div>
       <div class="status-container">
-        <button 
+        <button
           *ngFor="let status of statusList"
           class="btn-status"
           [class.active]="selectedStatus === status.value"
@@ -71,15 +73,15 @@
   </div>
 </div>
   <div class="icon_container">
-    <img src='assets/img/cross.png' class="cross" (click)="cross()"/> 
-    <img src='assets/img/heart.png' class="heart" (click)="heart()"/> 
+    <img src='assets/img/cross.png' class="cross" (click)="cross()"/>
+    <img src='assets/img/heart.png' class="heart" (click)="heart()"/>
   </div>
 
 <div *ngIf="showRating" class="rating-overlay">
 
   <div class="overlay-bg"></div>
 
-  <button 
+  <button
     mat-icon-button
     class="quit-rating-btn"
     (click)="quitterRating()">
