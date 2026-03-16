@@ -44,10 +44,29 @@ export class SwipeComponent {
     });
     this.sessionService.getOffset().then(offset => {
       this.offset = offset;
-      this.sessionService.suggest(this.offset).then(results => {
-        this.cards = this.parsingCards(results);
-      });
+      this.suggest();
     });
+  }
+
+  suggest() {
+    this.sessionService.suggest(this.offset + this.cards.length)
+      .then(results => {
+        if (!results || results.length === 0) {
+          console.log('Aucune suggestion trouvée.');
+          setTimeout(() => {
+            this.suggest();
+          }, 500); // Réessayer après 500 ms
+          return;
+        }
+        this.cards = this.cards.concat(this.parsingCards(results));
+        this.parsing = false;
+      })
+      .catch(err => {
+        console.error('Erreur lors de la récupération des suggestions :', err);
+        setTimeout(() => {
+          this.suggest();
+        }, 500); // Réessayer après 500 ms
+      });
   }
 
   parsingCards(results: any[]): Card[] {
@@ -123,14 +142,7 @@ export class SwipeComponent {
       //this.currentIndex = 0;
       console.log('Chargement de nouvelles cartes...');
       setTimeout(() => {
-        this.sessionService.suggest(this.offset + this.cards.length)
-          .then(results => {
-            this.cards = this.cards.concat(this.parsingCards(results));
-          })
-          .catch(error => {
-            console.error('Erreur lors du chargement des cartes :', error);
-            this.parsing = false;
-          });
+        this.suggest()
       }, 1500);
 
     }
@@ -212,7 +224,7 @@ export class SwipeComponent {
 
   handleRatingUp(rating: number) {
     console.log("Note choisie :", rating); // 1..10
-    
+
     this.sessionService.updateStatus(
       this.cards[this.currentIndex].id,
       {

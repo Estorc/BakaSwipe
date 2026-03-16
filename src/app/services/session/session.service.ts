@@ -214,12 +214,20 @@ export class SessionService {
   }
 
   async loadUserAnimeList(): Promise<any> {
+    if (!this.sessionId) {
+      console.log('Session expirée. Veuillez vous reconnecter.');
+      return null;
+    }
     try {
       const res = await fetch(`${SERVER_IP}/user-anime-list`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId: this.sessionId })
       });
+      if (res.status !== 200) {
+        console.error(`Erreur lors du chargement de la liste d’anime : ${res.status}`);
+        return null;
+      }
       const data = await res.json();
       console.log(`Anime list loaded:`, data);
       return data;
@@ -239,6 +247,10 @@ export class SessionService {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId: this.sessionId })
       });
+      if (res.status !== 200) {
+        console.error(`Erreur lors de la récupération des informations utilisateur : ${res.status}`);
+        return null;
+      }
 
       const data = await res.json();
 
